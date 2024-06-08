@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import Loader from './Loader';
+import StarRating from '../StarRating';
 
 const KEY = 'd8bed612';
 
 function MovieDetails({ selectedId }) {
   const [movie, setMovie] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const [userRating, setUserRating] = useState('');
   console.log(selectedId);
 
   useEffect(
@@ -68,7 +70,15 @@ function MovieDetails({ selectedId }) {
             </div>
           </header>
 
-          <section>
+          <section className="text-center">
+            <div className="flex justify-center py-16">
+              <StarRating max={10} onSetRating={setUserRating} />
+            </div>
+            {userRating > 0 && (
+              <button className=" rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700">
+                Add to list
+              </button>
+            )}
             <h2 className="px-12 py-8 text-2xl">{movie.Plot}</h2>
           </section>
         </>
