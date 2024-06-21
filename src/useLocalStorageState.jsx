@@ -1,6 +1,7 @@
-import { useState, useEffect } from "react";
+// custom hook to save state to local storage
+import { useState, useEffect } from 'react';
 
-export function useLocalStorageState(initialState, key) {
+function useLocalStorageState(initialState, key) {
   const [value, setValue] = useState(function () {
     const storedValue = localStorage.getItem(key);
     return storedValue ? JSON.parse(storedValue) : initialState;
@@ -15,3 +16,5 @@ export function useLocalStorageState(initialState, key) {
 
   return [value, setValue];
 }
+
+export default useLocalStorageState;

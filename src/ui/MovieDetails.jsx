@@ -4,10 +4,14 @@ import StarRating from '../StarRating';
 
 const KEY = 'd8bed612';
 
-function MovieDetails({ selectedId }) {
+function MovieDetails({ selectedId, onAddWatched, watched }) {
   const [movie, setMovie] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [userRating, setUserRating] = useState('');
+  const [showPopup, setShowPopup] = useState(false);
+
+  const isWatched = watched.map((movie) => movie.imdbID).includes(selectedId);
+
   console.log(selectedId);
 
   useEffect(
@@ -21,6 +25,7 @@ function MovieDetails({ selectedId }) {
         console.log(data);
         setMovie(data);
         setIsLoading(false);
+        setUserRating('');
       }
       getMovieDetails();
     },
@@ -38,6 +43,23 @@ function MovieDetails({ selectedId }) {
     },
     [movie.Title]
   );
+
+  function handleAdd() {
+    const newWatchedMovie = {
+      imdbID: selectedId,
+      title: movie.Title,
+      year: movie.Year,
+      poster: movie.Poster,
+      imdbRating: Number(movie.imdbRating),
+      runtime: Number(movie.Runtime.split(' ')[0]),
+      userRating,
+    };
+
+    onAddWatched(newWatchedMovie);
+    setShowPopup(true);
+    setTimeout(() => setShowPopup(false), 3000);
+    console.log(newWatchedMovie);
+  }
 
   return (
     <div>
@@ -71,16 +93,35 @@ function MovieDetails({ selectedId }) {
           </header>
 
           <section className="text-center">
-            <div className="flex justify-center py-16">
-              <StarRating max={10} onSetRating={setUserRating} />
+            <div className="flex flex-col items-center justify-center py-16">
+              {!isWatched ? (
+                <>
+                  <StarRating max={10} onSetRating={setUserRating} />
+                  {userRating > 0 && (
+                    <div className="mt-8">
+                      <button
+                        className=" rounded bg-blue-500 px-4 py-2 text-2xl font-bold text-white hover:bg-blue-700"
+                        onClick={handleAdd}
+                      >
+                        Add to list
+                      </button>
+                    </div>
+                  )}
+                </>
+              ) : (
+                <p className="text-3xl">Movie already added to list!</p>
+              )}
             </div>
-            {userRating > 0 && (
-              <button className=" rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700">
-                Add to list
-              </button>
-            )}
             <h2 className="px-12 py-8 text-2xl">{movie.Plot}</h2>
           </section>
+
+          {showPopup && (
+            <div className=" fixed left-1/2 top-0 m-4 -translate-x-1/2 transform rounded-lg bg-green-500 p-4 shadow-lg transition-transform duration-500 ease-out">
+              <p className="text-2xl font-medium">
+                Movie added to list successfully!
+              </p>
+            </div>
+          )}
         </>
       )}
     </div>
