@@ -1,12 +1,18 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import "./index.css";
-import App from "./App";
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+import { Provider } from 'react-redux';
+import store from './store';
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
+console.log('Store:', store);
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
     {/* <StarRating
       maxRating={5}
       messages={["Terrible", "Bad", "Okay", "Good", "Amazing"]}

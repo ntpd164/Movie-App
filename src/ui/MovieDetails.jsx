@@ -1,14 +1,19 @@
 import { useState, useEffect } from 'react';
 import Loader from './Loader';
 import StarRating from '../StarRating';
+// import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const KEY = 'd8bed612';
 
-function MovieDetails({ selectedId, onAddWatched, watched }) {
+function MovieDetails({ selectedId, onAddWatched, watched = [], username }) {
   const [movie, setMovie] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [userRating, setUserRating] = useState('');
   const [showPopup, setShowPopup] = useState(false);
+
+  // const username = useSelector((state) => state.user.username);
+  const navigate = useNavigate();
 
   const isWatched = watched.map((movie) => movie.imdbID).includes(selectedId);
 
@@ -45,6 +50,11 @@ function MovieDetails({ selectedId, onAddWatched, watched }) {
   );
 
   function handleAdd() {
+    if (!username) {
+      navigate('/login');
+      return;
+    }
+
     const newWatchedMovie = {
       imdbID: selectedId,
       title: movie.Title,

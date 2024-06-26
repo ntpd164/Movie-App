@@ -6,14 +6,43 @@ import {
   faGithub,
   faGoogle,
 } from '@fortawesome/free-brands-svg-icons';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
+// import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { updateName } from '../features/user/userSlice';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+// import useLocalStorageState from '../useLocalStorageState';
+import { useState } from 'react';
 
 function Login() {
+  const user = useSelector((state) => state.user);
+  console.log(user);
+
+  const [username, setUsername] = useState('');
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  // const location = useLocation();
+
+  function handleSubmit(e) {
+    console.log('handleSubmit');
+    e.preventDefault();
+
+    if (!username) return;
+    console.log('username', username);
+    dispatch(updateName(username));
+
+    // const redirectTo = location.state?.from || '/';
+    // navigate(redirectTo);
+    localStorage.setItem('loggedInUsername', username);
+    navigate('/');
+  }
+
   return (
     <div className="w-full">
       <div className="flex min-h-screen w-full flex-wrap justify-center bg-[url('./assets/bg_img.jpg')] bg-cover bg-no-repeat p-10">
         <div className="pt-18 w-[500px] items-center justify-center overflow-hidden rounded-xl bg-white p-32">
-          <form className="w-full">
+          <form className="w-full" onSubmit={handleSubmit}>
             <span className=" block pb-20 text-center text-7xl font-bold leading-5 text-[#333]">
               Login
             </span>
@@ -26,6 +55,8 @@ function Login() {
                 name="username"
                 className="mt-4 block h-14 w-full border-none pl-16 pr-2 text-3xl font-medium leading-5 text-[#333] outline-none"
                 placeholder="Username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
               />
               <FontAwesomeIcon
                 icon={faUser}
@@ -54,12 +85,12 @@ function Login() {
             <div className="mb-16 flex flex-wrap justify-center">
               <div className=" relative z-[1] mx-auto block w-full overflow-hidden rounded-[25px] shadow-custom-login">
                 <div className=" absolute -left-full top-0 -z-[1] h-full w-300 bg-custom-purple bg-custom-gradient transition-all duration-400 ease-in-out"></div>
-                <Link
-                  to="/home"
+                <button
+                  type="submit"
                   className="flex h-[50px] w-full items-center justify-center border-none px-5 font-poppins-medium text-3xl uppercase leading-5 text-white outline-none"
                 >
                   Login
-                </Link>
+                </button>
               </div>
             </div>
             <div className="flex items-center justify-center">

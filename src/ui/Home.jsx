@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useMovies } from '../useMovies';
 
 import NavBar from './NavBar';
 import Loader from './Loader';
 import Search from './Search';
-import NumResults from './NumResults';
+// import NumResults from './NumResults';
+import UserInfo from './UserInfo';
 import Main from './Main';
 import Box from './Box';
 import MovieList from './MovieList';
@@ -15,12 +16,21 @@ import WatchedMoviesList from './WatchedMoviesList';
 
 // const KEY = 'd8bed612';
 
-export default function Home() {
+export default function Home({ movieId }) {
   const [query, setQuery] = useState('');
-  const [selectedId, setSelectedId] = useState(null);
+  const [selectedId, setSelectedId] = useState(movieId ? movieId : null);
   const { movies, isLoading, error } = useMovies(query);
 
   const [watched, setWatched] = useLocalStorageState([], 'watched');
+
+  const [loggedInUsername, setLoggedInUsername] = useState('');
+
+  useEffect(() => {
+    const username = localStorage.getItem('loggedInUsername');
+    if (username) {
+      setLoggedInUsername(username);
+    }
+  }, []); // Load username từ localStorage khi component được mount lần đầu
 
   function handleSelectMovie(id) {
     setSelectedId((selectedId) => (id === selectedId ? null : id));
@@ -43,7 +53,8 @@ export default function Home() {
     <>
       <NavBar>
         <Search query={query} setQuery={setQuery} />
-        <NumResults movies={movies} />
+        {/* <NumResults movies={movies} /> */}
+        <UserInfo username={loggedInUsername} />
       </NavBar>
 
       <Main>
@@ -63,6 +74,7 @@ export default function Home() {
               onCloseMovie={handleCloseMovie}
               onAddWatched={handleAddWatched}
               watched={watched}
+              username={loggedInUsername}
             />
           ) : (
             <>
