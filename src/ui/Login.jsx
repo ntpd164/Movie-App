@@ -53,6 +53,7 @@ function Login() {
               <input
                 type="text"
                 name="username"
+                required
                 className="mt-4 block h-14 w-full border-none pl-16 pr-2 text-3xl font-medium leading-5 text-[#333] outline-none"
                 placeholder="Username"
                 value={username}
@@ -71,6 +72,7 @@ function Login() {
               <input
                 type="password"
                 name="password"
+                required
                 className="mt-4 block h-14 w-full border-none pl-16 pr-2 text-3xl font-medium leading-5 text-[#333] outline-none"
                 placeholder="Password"
               />

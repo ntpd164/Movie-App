@@ -49,12 +49,18 @@ export default function Home({ movieId }) {
     setWatched((watched) => watched.filter((movie) => movie.imdbID !== id));
   }
 
+  //Hanle logout
+  function handleLogout() {
+    localStorage.removeItem('loggedInUsername');
+    setLoggedInUsername('');
+  }
+
   return (
     <>
       <NavBar>
         <Search query={query} setQuery={setQuery} />
         {/* <NumResults movies={movies} /> */}
-        <UserInfo username={loggedInUsername} />
+        <UserInfo username={loggedInUsername} onLogout={handleLogout} />
       </NavBar>
 
       <Main>
