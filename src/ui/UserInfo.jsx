@@ -60,7 +60,7 @@ function UserInfo({ username, onLogout }) {
                   className=" block px-6 py-2 text-3xl text-[#706f6f]"
                   href="#"
                 >
-                  Settings
+                  Help
                 </a>
               </li>
               <li className=" hover:bg-[#e9e9e9]">

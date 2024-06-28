@@ -2,10 +2,6 @@ import Login from './ui/Login';
 import Home from './ui/Home';
 import UserProfile from './ui/UserProfile';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-// import MovieDetails from './ui/MovieDetails';
-// import SelectedMovie from './SelectedMovie';
-
-const username = localStorage.getItem('loggedInUsername');
 
 const router = createBrowserRouter([
   {
@@ -22,7 +18,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/user/profile',
-        element: <UserProfile username={username} />,
+        element: <UserProfile />,
       },
       // {
       //   path: '/movie/:selectedId',

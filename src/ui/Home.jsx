@@ -51,8 +51,9 @@ export default function Home({ movieId }) {
 
   //Hanle logout
   function handleLogout() {
-    localStorage.removeItem('loggedInUsername');
+    localStorage.clear();
     setLoggedInUsername('');
+    setWatched([]);
   }
 
   return (

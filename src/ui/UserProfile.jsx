@@ -1,14 +1,57 @@
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { updateName } from '../features/user/userSlice';
+import { useState, useRef, useEffect } from 'react';
+import useOutsideAlerter from '../useOutsideAlerter';
 
-export default function UserProfile({ username = '' }) {
+export default function UserProfile() {
+  const initialUsername = localStorage.getItem('loggedInUsername') || '';
+  const initialMobileNumber = localStorage.getItem('mobileNumber') || '';
+  const initialEmail = localStorage.getItem('email') || '';
+  const initialAddress = localStorage.getItem('address') || '';
+  const initialPostcode = localStorage.getItem('postcode') || '';
+  const initialState = localStorage.getItem('state') || '';
+  const initialArea = localStorage.getItem('area') || '';
+  const initialCountry = localStorage.getItem('country') || '';
+
+  const [username, setUsername] = useState(initialUsername);
+  const [mobileNumber, setMobileNumber] = useState(initialMobileNumber);
+  const [email, setEmail] = useState(initialEmail);
+  const [address, setAddress] = useState(initialAddress);
+  const [postcode, setPostcode] = useState(initialPostcode);
+  const [state, setState] = useState(initialState);
+  const [area, setArea] = useState(initialArea);
+  const [country, setCountry] = useState(initialCountry);
+
+  const [showPopup, setShowPopup] = useState(false);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const profileRef = useRef(null);
+
+  useOutsideAlerter(profileRef, () => navigate('/'));
+
+  useEffect(() => {
+    localStorage.setItem('loggedInUsername', username);
+    localStorage.setItem('mobileNumber', mobileNumber);
+    localStorage.setItem('email', email);
+    localStorage.setItem('address', address);
+    localStorage.setItem('postcode', postcode);
+    localStorage.setItem('state', state);
+    localStorage.setItem('area', area);
+    localStorage.setItem('country', country);
+  }, [username, mobileNumber, email, address, postcode, state, area, country]);
 
   function handleSaveProfile() {
-    navigate('/');
+    dispatch(updateName(username));
+    setShowPopup(true);
+    setTimeout(() => {
+      setShowPopup(false);
+      navigate('/');
+    }, 1000);
   }
 
   return (
-    <div className="container mx-auto my-5 rounded bg-white ">
+    <div ref={profileRef} className="container mx-auto my-5 rounded bg-white ">
       <div className="flex flex-wrap">
         <div className="w-full border-r md:w-1/4">
           <div className="mt-[120px] flex flex-col items-center p-3 text-center">
@@ -39,6 +82,8 @@ export default function UserProfile({ username = '' }) {
                   type="text"
                   className="mt-3 block w-full rounded-md border border-solid border-[#d0cccc] p-3 text-2xl text-[#333] text-[#333] shadow-sm"
                   placeholder={username}
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
                 ></input>
               </div>
             </div>
@@ -49,9 +94,11 @@ export default function UserProfile({ username = '' }) {
                   Mobile Number
                 </label>
                 <input
-                  type="text"
+                  type="number"
                   className="mt-3 block w-full rounded-md border border-solid border-[#d0cccc] p-3 text-2xl text-[#333] shadow-sm"
                   placeholder="enter mobile number"
+                  value={mobileNumber}
+                  onChange={(e) => setMobileNumber(e.target.value)}
                 ></input>
               </div>
             </div>
@@ -65,6 +112,8 @@ export default function UserProfile({ username = '' }) {
                   type="text"
                   className="mt-3 block w-full rounded-md border border-solid border-[#d0cccc] p-3 text-2xl text-[#333] shadow-sm"
                   placeholder="enter email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 ></input>
               </div>
             </div>
@@ -78,6 +127,8 @@ export default function UserProfile({ username = '' }) {
                   type="text"
                   className="mt-3 block w-full rounded-md border border-solid border-[#d0cccc] p-3 text-2xl text-[#333] shadow-sm"
                   placeholder="enter address"
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
                 ></input>
               </div>
             </div>
@@ -91,6 +142,8 @@ export default function UserProfile({ username = '' }) {
                   type="text"
                   className="mt-3 block w-full rounded-md border border-solid border-[#d0cccc] p-3 text-2xl text-[#333] shadow-sm"
                   placeholder="enter postcode"
+                  value={postcode}
+                  onChange={(e) => setPostcode(e.target.value)}
                 ></input>
               </div>
             </div>
@@ -104,6 +157,8 @@ export default function UserProfile({ username = '' }) {
                   type="text"
                   className="mt-3 block w-full rounded-md border border-solid border-[#d0cccc] p-3 text-2xl text-[#333] shadow-sm"
                   placeholder="enter state"
+                  value={state}
+                  onChange={(e) => setState(e.target.value)}
                 ></input>
               </div>
             </div>
@@ -117,6 +172,8 @@ export default function UserProfile({ username = '' }) {
                   type="text"
                   className="mt-3 block w-full rounded-md border border-solid border-[#d0cccc] p-3 text-2xl text-[#333] shadow-sm"
                   placeholder="enter area"
+                  value={area}
+                  onChange={(e) => setArea(e.target.value)}
                 ></input>
               </div>
             </div>
@@ -130,6 +187,8 @@ export default function UserProfile({ username = '' }) {
                   type="text"
                   className="mt-3 block w-full rounded-md border border-solid border-[#d0cccc] p-3 text-2xl text-[#333] shadow-sm"
                   placeholder="enter country"
+                  value={country}
+                  onChange={(e) => setCountry(e.target.value)}
                 ></input>
               </div>
             </div>
@@ -147,6 +206,11 @@ export default function UserProfile({ username = '' }) {
 
         <div></div>
       </div>
+      {showPopup && (
+        <div className=" fixed left-1/2 top-0 m-4 -translate-x-1/2 transform rounded-lg bg-green-500 p-4 shadow-lg transition-transform duration-500 ease-out">
+          <p className="text-2xl font-medium">Saved profile successfully!</p>
+        </div>
+      )}
     </div>
   );
 }
