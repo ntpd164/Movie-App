@@ -32,7 +32,7 @@ function UserInfo({ username, onLogout }) {
   }
 
   return (
-    <div className="flex justify-end">
+    <div className="z-10 ml-28 flex">
       <div
         className="relative"
         onMouseEnter={handleMouseEnter}
@@ -40,7 +40,7 @@ function UserInfo({ username, onLogout }) {
       >
         <img
           className="{username === '' ? 'cursor-pointer' : ''} w-24"
-          src="./src/assets/defaultUser.png"
+          src="./src/assets/img/other/defaultUser.png"
           alt="Avatar"
         ></img>
         {showMenu && (
@@ -78,13 +78,17 @@ function UserInfo({ username, onLogout }) {
           </div>
         )}
       </div>
-      <p className="mt-2 text-3xl">
+      <p className="mt-3 text-3xl">
         {username === '' ? (
-          <button href="#" className="text-[#c6cbd7]" onClick={handleLogin}>
+          <button
+            href="#"
+            className="font-poppins-regular text-white"
+            onClick={handleLogin}
+          >
             Login
           </button>
         ) : (
-          `Hello, ${username}!`
+          `Hi, ${username}!`
         )}
       </p>
     </div>

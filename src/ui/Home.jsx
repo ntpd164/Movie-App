@@ -4,6 +4,8 @@ import { useMovies } from '../useMovies';
 import NavBar from './NavBar';
 import Loader from './Loader';
 import Search from './Search';
+import Logo from './Logo';
+import Menu from './Menu';
 // import NumResults from './NumResults';
 import UserInfo from './UserInfo';
 import Main from './Main';
@@ -13,6 +15,8 @@ import MovieDetails from './MovieDetails';
 import WatchedSummary from './WatchedSummary';
 import useLocalStorageState from '../useLocalStorageState';
 import WatchedMoviesList from './WatchedMoviesList';
+import Header from './Header';
+// import { useMoviesById } from '../useMoviesById';
 
 // const KEY = 'd8bed612';
 
@@ -24,6 +28,41 @@ export default function Home({ movieId }) {
   const [watched, setWatched] = useLocalStorageState([], 'watched');
 
   const [loggedInUsername, setLoggedInUsername] = useState('');
+
+  // const {
+  //   movies: preselectedMovies,
+  //   isLoading: preselectedLoading,
+  //   error: preselectedError,
+  // } = useMoviesById([
+  //   'tt15239678',
+  //   'tt12037194',
+  //   'tt11389872',
+  //   'tt1684562',
+  //   'tt21692408',
+  // ]);
+
+  const images = [
+    {
+      src: '../src/assets/img/slider/wish.jpg',
+      alt: 'Wish',
+    },
+    {
+      src: '../src/assets/img/slider/dune2.jpg',
+      alt: 'Dune',
+    },
+    {
+      src: '../src/assets/img/slider/furiosa.jpg',
+      alt: 'Furiosa',
+    },
+    {
+      src: '../src/assets/img/slider/pussinboots.jpg',
+      alt: 'Apes',
+    },
+    {
+      src: '../src/assets/img/slider/panda.png',
+      alt: 'Panda',
+    },
+  ];
 
   useEffect(() => {
     const username = localStorage.getItem('loggedInUsername');
@@ -58,11 +97,16 @@ export default function Home({ movieId }) {
 
   return (
     <>
-      <NavBar>
-        <Search query={query} setQuery={setQuery} />
-        {/* <NumResults movies={movies} /> */}
-        <UserInfo username={loggedInUsername} onLogout={handleLogout} />
-      </NavBar>
+      <Header images={images}>
+        <NavBar>
+          <Logo />
+          <Menu />
+          <Search query={query} setQuery={setQuery} />
+          <UserInfo username={loggedInUsername} onLogout={handleLogout} />
+        </NavBar>
+
+        {/* <Slider images={images} /> */}
+      </Header>
 
       <Main>
         <Box>

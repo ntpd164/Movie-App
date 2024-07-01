@@ -1,11 +1,4 @@
-import Logo from './Logo';
-
 function NavBar({ children }) {
-  return (
-    <nav className="nav-bar">
-      <Logo />
-      {children}
-    </nav>
-  );
+  return <div className="z-10 flex items-center pt-10">{children}</div>;
 }
 export default NavBar;

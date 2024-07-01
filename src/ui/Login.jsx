@@ -40,7 +40,7 @@ function Login() {
 
   return (
     <div className="w-full">
-      <div className="flex min-h-screen w-full flex-wrap justify-center bg-[url('./assets/bg_img.jpg')] bg-cover bg-no-repeat p-10">
+      <div className="flex min-h-screen w-full flex-wrap justify-center bg-[url('./assets/img/other/bg_img.jpg')] bg-cover bg-no-repeat p-10">
         <div className="pt-18 w-[500px] items-center justify-center overflow-hidden rounded-xl bg-white p-32">
           <form className="w-full" onSubmit={handleSubmit}>
             <span className=" block pb-20 text-center text-7xl font-bold leading-5 text-[#333]">
