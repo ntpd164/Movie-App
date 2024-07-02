@@ -27,7 +27,6 @@ export default {
       },
       colors: {
         primary: 'var(--color-primary)',
-        'primary-light': 'var(--color-primary-light)',
         text: 'var(--color-text)',
         'text-dark': 'var(--color-text-dark)',
         'background-100': 'var(--color-background-100)',
