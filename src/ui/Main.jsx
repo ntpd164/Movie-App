@@ -1,6 +1,12 @@
 function Main({ children }) {
+  // flex h-box justify-center gap-10
   return (
-    <main className="mt-10 flex h-box justify-center gap-10">{children}</main>
+    <main className="mt-14 ">
+      <h2 className="mb-14 ml-[140px] font-poppins-bold text-[36px] font-bold text-primary">
+        What to watch
+      </h2>
+      {children}
+    </main>
   );
 }
 

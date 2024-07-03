@@ -16,7 +16,8 @@ import WatchedSummary from './WatchedSummary';
 import useLocalStorageState from '../useLocalStorageState';
 import WatchedMoviesList from './WatchedMoviesList';
 import Header from './Header';
-// import { useMoviesById } from '../useMoviesById';
+import TopPicks from './TopPicks';
+import { useMoviesById } from '../useMoviesById';
 
 // const KEY = 'd8bed612';
 
@@ -29,17 +30,24 @@ export default function Home({ movieId }) {
 
   const [loggedInUsername, setLoggedInUsername] = useState('');
 
-  // const {
-  //   movies: preselectedMovies,
-  //   isLoading: preselectedLoading,
-  //   error: preselectedError,
-  // } = useMoviesById([
-  //   'tt15239678',
-  //   'tt12037194',
-  //   'tt11389872',
-  //   'tt1684562',
-  //   'tt21692408',
-  // ]);
+  const {
+    movies: topPicksMovies,
+    isLoading: topPicksIsLoading,
+    error: topPicksError,
+  } = useMoviesById([
+    'tt0468569',
+    'tt0167260',
+    'tt0111161',
+    'tt0108052',
+    'tt0114369',
+    'tt0816692',
+    'tt1375666',
+    'tt1745960',
+    'tt0060196',
+    'tt0120737',
+    'tt0073486',
+    'tt0372784',
+  ]);
 
   const images = [
     {
@@ -155,6 +163,12 @@ export default function Home({ movieId }) {
       </Header>
 
       <Main>
+        {topPicksIsLoading && <Loader />}
+        {!topPicksIsLoading &&
+          !topPicksError &&
+          (console.log(topPicksMovies),
+          (<TopPicks topPicksMovies={topPicksMovies} />))}
+        {topPicksError && <ErrorMessage message={error} />}
         <Box>
           {/* {isLoading ? <Loader /> : <MovieList movies={movies} />} */}
           {isLoading && <Loader />}
