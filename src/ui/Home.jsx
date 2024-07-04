@@ -17,6 +17,8 @@ import useLocalStorageState from '../useLocalStorageState';
 import WatchedMoviesList from './WatchedMoviesList';
 import Header from './Header';
 import TopPicks from './TopPicks';
+import FanFavorites from './FanFavorites';
+import PopularCelebrities from './PopularCelebrities';
 import { useMoviesById } from '../useMoviesById';
 
 // const KEY = 'd8bed612';
@@ -30,11 +32,7 @@ export default function Home({ movieId }) {
 
   const [loggedInUsername, setLoggedInUsername] = useState('');
 
-  const {
-    movies: topPicksMovies,
-    isLoading: topPicksIsLoading,
-    error: topPicksError,
-  } = useMoviesById([
+  const topPicksMovieIds = [
     'tt0468569',
     'tt0167260',
     'tt0111161',
@@ -47,7 +45,22 @@ export default function Home({ movieId }) {
     'tt0120737',
     'tt0073486',
     'tt0372784',
-  ]);
+  ];
+
+  const fanFavoritesMovieIds = [
+    'tt22022452',
+    'tt12037194',
+    'tt12735488',
+    'tt15239678',
+    'tt1190634',
+    'tt1684562',
+    'tt23289160',
+    'tt11198330',
+    'tt19231492',
+    'tt12637874',
+    'tt17279496',
+    'tt2096673',
+  ];
 
   const images = [
     {
@@ -118,6 +131,81 @@ export default function Home({ movieId }) {
     },
   ];
 
+  const celebrities = [
+    {
+      src: '../src/assets/img/celebrities/tamayoPerry.jpg',
+      name: 'Tamayo Perry',
+      role: 'Actor',
+    },
+    {
+      src: '../src/assets/img/celebrities/martinMull.jpg',
+      name: 'Martin Mull',
+      role: 'Actor',
+    },
+    {
+      src: '../src/assets/img/celebrities/emma.jpg',
+      name: "Emma D'Arcy",
+      role: 'Actress',
+    },
+    {
+      src: '../src/assets/img/celebrities/coughlan.jpg',
+      name: 'Nicola Coughlan',
+      role: 'Actress',
+    },
+    {
+      src: '../src/assets/img/celebrities/moriarty.jpg',
+      name: 'Erin Moriarty',
+      role: 'Actress',
+    },
+    {
+      src: '../src/assets/img/celebrities/sutherland.jpg',
+      name: 'Jennifer Lawrence',
+      role: 'Actress',
+    },
+    {
+      src: '../src/assets/img/celebrities/valorie.jpg',
+      name: 'Valorie Curry',
+      role: 'Actress',
+    },
+    {
+      src: '../src/assets/img/celebrities/olivia.jpg',
+      name: 'Olivia Cooke',
+      role: 'Actress',
+    },
+    {
+      src: '../src/assets/img/celebrities/alba.jpg',
+      name: 'Jessica Alba',
+      role: 'Actress',
+    },
+    {
+      src: '../src/assets/img/celebrities/dafne.jpg',
+      name: 'Dafne Keen',
+      role: 'Actress',
+    },
+    {
+      src: '../src/assets/img/celebrities/cobbs.jpg',
+      name: 'Bill Cobbs',
+      role: 'Actor',
+    },
+    {
+      src: '../src/assets/img/celebrities/adria.jpg',
+      name: 'Adria Arjona',
+      role: 'Actress',
+    },
+  ];
+
+  const {
+    movies: topPicksMovies,
+    isLoading: topPicksIsLoading,
+    error: topPicksError,
+  } = useMoviesById(topPicksMovieIds);
+
+  const {
+    movies: fanFavoritesMovies,
+    isLoading: fanFavoritesIsLoading,
+    error: fanFavoritesError,
+  } = useMoviesById(fanFavoritesMovieIds);
+
   useEffect(() => {
     const username = localStorage.getItem('loggedInUsername');
     if (username) {
@@ -163,12 +251,21 @@ export default function Home({ movieId }) {
       </Header>
 
       <Main>
-        {topPicksIsLoading && <Loader />}
+        {console.log('check loading: ', topPicksIsLoading)}
+        {topPicksIsLoading && (console.log('loaddd'), (<Loader />))}
         {!topPicksIsLoading &&
           !topPicksError &&
           (console.log(topPicksMovies),
           (<TopPicks topPicksMovies={topPicksMovies} />))}
-        {topPicksError && <ErrorMessage message={error} />}
+        {topPicksError && <ErrorMessage message={topPicksError} />}
+        {fanFavoritesIsLoading && <Loader />}
+        {!fanFavoritesIsLoading &&
+          !fanFavoritesError &&
+          (console.log(fanFavoritesMovies),
+          (<FanFavorites fanFavoritesMovies={fanFavoritesMovies} />))}
+        {fanFavoritesError && <ErrorMessage message={fanFavoritesError} />}
+
+        <PopularCelebrities celebrities={celebrities} />
         <Box>
           {/* {isLoading ? <Loader /> : <MovieList movies={movies} />} */}
           {isLoading && <Loader />}
@@ -177,7 +274,6 @@ export default function Home({ movieId }) {
           )}
           {error && <ErrorMessage message={error} />}
         </Box>
-
         <Box>
           {selectedId ? (
             <MovieDetails

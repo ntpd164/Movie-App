@@ -57,7 +57,7 @@ export default function UserProfile() {
           <div className="mt-[120px] flex flex-col items-center p-3 text-center">
             <img
               className=" mt-5 h-[200px] w-[300px] "
-              src="../src/assets/defaultUser.png"
+              src="../src/assets/img/other/defaultUser.png"
               alt="Avatar"
             ></img>
             <span className="mt-5 font-poppins-bold text-3xl text-[#525151]">

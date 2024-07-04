@@ -32,7 +32,7 @@ function UserInfo({ username, onLogout }) {
   }
 
   return (
-    <div className="z-10 ml-28 flex">
+    <div className="z-10 ml-[100px] flex">
       <div
         className="relative"
         onMouseEnter={handleMouseEnter}

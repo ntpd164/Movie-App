@@ -14,12 +14,12 @@ function Search({ query, setQuery }) {
   });
 
   return (
-    <div className="z-10 ml-10 rounded-xl border border-zinc-700 px-7 py-3 text-3xl text-text ">
-      <span className=" border-r border-gray-500 pr-6">
+    <div className="z-10 ml-10 rounded-xl border  bg-white px-7 py-3 text-3xl text-text ">
+      <span className=" border-r border-gray-500 pr-6 text-[#5a5a5a]">
         <FontAwesomeIcon icon={faMagnifyingGlass} />
       </span>
       <input
-        className="  border-none bg-transparent pl-6 placeholder:text-text-dark focus:-translate-y-0.5 focus:shadow-shadow-custom focus:outline-none"
+        className="border-none  bg-transparent pl-6 text-[#414141] placeholder:text-text-dark focus:-translate-y-0.5  focus:outline-none"
         type="text"
         placeholder="Search movies..."
         value={query}

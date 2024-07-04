@@ -8,31 +8,31 @@ import {
 import { faStar } from '@fortawesome/free-regular-svg-icons';
 import { useState } from 'react';
 
-export default function TopPicks({ topPicksMovies }) {
+export default function FanFavorites({ fanFavoritesMovies }) {
   const [startIndex, setStartIndex] = useState(0);
   const moviesPerPage = 6;
 
   const handleNext = () => {
     const newIndex = startIndex + moviesPerPage;
-    if (newIndex < topPicksMovies.length) {
+    if (newIndex < fanFavoritesMovies.length) {
       setStartIndex(newIndex);
     } else {
       setStartIndex(0); // Reset về đầu khi hết phim
     }
   };
 
-  const currentMovies = topPicksMovies.slice(
+  const currentMovies = fanFavoritesMovies.slice(
     startIndex,
     startIndex + moviesPerPage
   );
 
   return (
-    <div id="top-picks" className="mx-[140px] mb-[50px] pt-[30px]">
+    <div id="fan-favorites" className="mx-[140px] mb-[50px] pt-[30px]">
       <div>
         <div className="mb-4 flex">
           <div className="mr-4 rounded-sm border-2 border-primary"></div>
           <h2 className="font-poppins-semibold text-5xl font-semibold text-white">
-            Top picks
+            Fan favorites
           </h2>
           <a className="relative">
             <FontAwesomeIcon
@@ -41,14 +41,11 @@ export default function TopPicks({ topPicksMovies }) {
             />
           </a>
         </div>
-        <span className="font-poppins-bold text-3xl font-light text-[#a2a2a2]">
-          TV shows and movies recommended for you
+        <span className="pfont-poppins-bold text-3xl font-light text-[#a2a2a2]">
+          This week&apos;s most popular TV shows and movies
         </span>
-        <a className="my-5 block font-poppins-semibold text-[18px] font-semibold text-blue-500">
-          Sign In
-        </a>
       </div>
-      <div className="relative mx-auto grid grid-cols-6 gap-10">
+      <div className="relative mx-auto mt-8 grid grid-cols-6 gap-10">
         {currentMovies.map((movie, index) => (
           <div key={index} className="">
             <img

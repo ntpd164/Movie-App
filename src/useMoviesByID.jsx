@@ -7,8 +7,9 @@ export function useMoviesById(initialMovieIds) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const movieIdsRef = useRef(initialMovieIds);
+  const cache = useRef({});
 
-  useEffect(function () {
+  useEffect(() => {
     const controller = new AbortController();
 
     async function fetchMoviesById() {
@@ -18,21 +19,23 @@ export function useMoviesById(initialMovieIds) {
         const moviesData = [];
 
         for (const id of movieIdsRef.current) {
-          console.log(id);
-          const res = await fetch(
-            `http://www.omdbapi.com/?apikey=${KEY}&i=${id}`,
-            { signal: controller.signal }
-          );
+          if (cache.current[id]) {
+            moviesData.push(cache.current[id]);
+          } else {
+            const res = await fetch(
+              `http://www.omdbapi.com/?apikey=${KEY}&i=${id}`,
+              { signal: controller.signal }
+            );
 
-          if (!res.ok)
-            throw new Error('Something went wrong with fetching movie by ID');
+            if (!res.ok)
+              throw new Error('Something went wrong with fetching movie by ID');
 
-          const data = await res.json();
-          if (data.Response === 'False') throw new Error('Movie not found');
+            const data = await res.json();
+            if (data.Response === 'False') throw new Error('Movie not found');
 
-          console.log(data);
-
-          moviesData.push(data);
+            cache.current[id] = data;
+            moviesData.push(data);
+          }
         }
 
         setMovies(moviesData);
@@ -55,7 +58,7 @@ export function useMoviesById(initialMovieIds) {
 
     fetchMoviesById();
 
-    return function () {
+    return () => {
       controller.abort();
     };
   }, []);
