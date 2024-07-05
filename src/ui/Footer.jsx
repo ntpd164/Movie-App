@@ -6,13 +6,25 @@ import {
   faSquareFacebook,
 } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useNavigate } from 'react-router-dom';
 
-export default function Footer() {
+export default function Footer({ username }) {
+  const navigate = useNavigate();
+
+  function handleSignIn() {
+    navigate('/login');
+  }
+
   return (
     <footer className="mt-20">
-      <button className="mx-auto flex rounded-lg bg-primary px-10 py-3 font-poppins-semibold text-2xl font-semibold text-black hover:bg-[#deca17]">
-        Sign in for more access
-      </button>
+      {!username && (
+        <button
+          onClick={handleSignIn}
+          className="mx-auto flex rounded-lg bg-primary px-10 py-3 font-poppins-semibold text-2xl font-semibold text-black hover:bg-[#deca17]"
+        >
+          Sign in for more access
+        </button>
+      )}
       <div className="mb-10 mt-10 flex items-center justify-center gap-x-8 font-poppins-bold font-semibold">
         <div className="rounded-xl border border-zinc-600 px-24 py-4 text-3xl">
           <h2 className="flex items-center justify-center">

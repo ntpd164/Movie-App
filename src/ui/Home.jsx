@@ -257,7 +257,12 @@ export default function Home() {
         {!topPicksIsLoading &&
           !topPicksError &&
           (console.log(topPicksMovies),
-          (<TopPicks topPicksMovies={topPicksMovies} />))}
+          (
+            <TopPicks
+              username={loggedInUsername}
+              topPicksMovies={topPicksMovies}
+            />
+          ))}
         {topPicksError && <ErrorMessage message={topPicksError} />}
         {fanFavoritesIsLoading && <Loader />}
         {!fanFavoritesIsLoading &&
@@ -294,7 +299,7 @@ export default function Home() {
           )}
         </Box> */}
       </Main>
-      <Footer />
+      <Footer username={loggedInUsername} />
     </>
   );
 }

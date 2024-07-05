@@ -13,7 +13,8 @@ import { updateName } from '../features/user/userSlice';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 // import useLocalStorageState from '../useLocalStorageState';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import Footer from './Footer';
 
 function Login() {
   const user = useSelector((state) => state.user);
@@ -23,6 +24,10 @@ function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   // const location = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   function handleSubmit(e) {
     console.log('handleSubmit');
@@ -40,7 +45,7 @@ function Login() {
 
   return (
     <div className="w-full">
-      <div className="flex min-h-screen w-full flex-wrap justify-center bg-[url('./assets/img/other/bg_img.jpg')] bg-cover bg-no-repeat p-10">
+      <div className="flex min-h-screen w-full flex-wrap justify-center bg-[#999] bg-cover bg-no-repeat p-10">
         <div className="pt-18 w-[500px] items-center justify-center overflow-hidden rounded-xl bg-white p-32">
           <form className="w-full" onSubmit={handleSubmit}>
             <span className=" block pb-20 text-center text-7xl font-bold leading-5 text-[#333]">
@@ -85,11 +90,11 @@ function Login() {
               <a href="#">Forgot password?</a>
             </div>
             <div className="mb-16 flex flex-wrap justify-center">
-              <div className=" relative z-[1] mx-auto block w-full overflow-hidden rounded-[25px] shadow-custom-login">
-                <div className=" absolute -left-full top-0 -z-[1] h-full w-300 bg-custom-purple bg-custom-gradient transition-all duration-400 ease-in-out"></div>
+              <div className=" relative z-[1] mx-auto block w-full overflow-hidden rounded-[25px] shadow-md">
+                <div className=" absolute -left-full top-0 -z-[1] h-full w-300 bg-primary transition-all duration-400 ease-in-out "></div>
                 <button
                   type="submit"
-                  className="flex h-[50px] w-full items-center justify-center border-none px-5 font-poppins-medium text-3xl uppercase leading-5 text-white outline-none"
+                  className="flex h-[50px] w-full items-center justify-center border-none px-5 font-poppins-semibold text-3xl font-bold uppercase leading-5 text-[#4a4a4a] outline-none hover:bg-[#deca17]"
                 >
                   Login
                 </button>
@@ -126,6 +131,7 @@ function Login() {
           </form>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

@@ -7,10 +7,12 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { faStar } from '@fortawesome/free-regular-svg-icons';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-export default function TopPicks({ topPicksMovies }) {
+export default function TopPicks({ username, topPicksMovies }) {
   const [startIndex, setStartIndex] = useState(0);
   const moviesPerPage = 6;
+  const navigate = useNavigate();
 
   const handleNext = () => {
     const newIndex = startIndex + moviesPerPage;
@@ -25,6 +27,10 @@ export default function TopPicks({ topPicksMovies }) {
     startIndex,
     startIndex + moviesPerPage
   );
+
+  function handleSignIn() {
+    navigate('/login');
+  }
 
   return (
     <div id="top-picks" className="mx-[140px] mb-[50px] pt-[30px]">
@@ -41,14 +47,19 @@ export default function TopPicks({ topPicksMovies }) {
             />
           </a>
         </div>
-        <span className="font-poppins-bold text-3xl font-light text-[#a2a2a2]">
+        <span className="mb-5 block font-poppins-bold text-3xl font-light text-[#a2a2a2]">
           TV shows and movies recommended for you
         </span>
-        <a className="my-5 block font-poppins-semibold text-[18px] font-semibold text-blue-500">
-          Sign In
-        </a>
+        {!username && (
+          <a
+            onClick={handleSignIn}
+            className=" cursor-pointer font-poppins-semibold text-[18px] font-semibold text-blue-500"
+          >
+            Sign In
+          </a>
+        )}
       </div>
-      <div className="relative mx-auto grid grid-cols-6 gap-10">
+      <div className="relative mx-auto mt-5 grid grid-cols-6 gap-10">
         {currentMovies.map((movie, index) => (
           <div key={index} className="">
             <img

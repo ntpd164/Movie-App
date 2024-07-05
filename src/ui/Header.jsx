@@ -28,7 +28,7 @@ export default function Header({ children, images }) {
   }
 
   return (
-    <div className="slider-container">
+    <div id="home" className="slider-container">
       {images.map((image, index) => (
         <div
           className={`header ${index === currentImage ? 'visible' : 'hidden'}`}
