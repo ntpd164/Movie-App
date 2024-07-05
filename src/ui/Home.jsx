@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useMovies } from '../useMovies';
+// import { useMovies } from '../useMovies';
 
 import NavBar from './NavBar';
 import Loader from './Loader';
@@ -9,26 +9,27 @@ import Menu from './Menu';
 // import NumResults from './NumResults';
 import UserInfo from './UserInfo';
 import Main from './Main';
-import Box from './Box';
-import MovieList from './MovieList';
-import MovieDetails from './MovieDetails';
-import WatchedSummary from './WatchedSummary';
-import useLocalStorageState from '../useLocalStorageState';
-import WatchedMoviesList from './WatchedMoviesList';
+// import Box from './Box';
+// import MovieList from './MovieList';
+// import MovieDetails from './MovieDetails';
+// import WatchedSummary from './WatchedSummary';
+// import useLocalStorageState from '../useLocalStorageState';
+// import WatchedMoviesList from './WatchedMoviesList';
 import Header from './Header';
 import TopPicks from './TopPicks';
 import FanFavorites from './FanFavorites';
 import PopularCelebrities from './PopularCelebrities';
+import Footer from './Footer';
 import { useMoviesById } from '../useMoviesById';
 
 // const KEY = 'd8bed612';
 
-export default function Home({ movieId }) {
+export default function Home() {
   const [query, setQuery] = useState('');
-  const [selectedId, setSelectedId] = useState(movieId ? movieId : null);
-  const { movies, isLoading, error } = useMovies(query);
+  // const [selectedId, setSelectedId] = useState(movieId ? movieId : null);
+  // const { movies, isLoading, error } = useMovies(query);
 
-  const [watched, setWatched] = useLocalStorageState([], 'watched');
+  // const [watched, setWatched] = useLocalStorageState([], 'watched');
 
   const [loggedInUsername, setLoggedInUsername] = useState('');
 
@@ -213,28 +214,28 @@ export default function Home({ movieId }) {
     }
   }, []); // Load username từ localStorage khi component được mount lần đầu
 
-  function handleSelectMovie(id) {
-    setSelectedId((selectedId) => (id === selectedId ? null : id));
-    console.log(id);
-  }
+  // function handleSelectMovie(id) {
+  //   setSelectedId((selectedId) => (id === selectedId ? null : id));
+  //   console.log(id);
+  // }
 
-  function handleCloseMovie() {
-    setSelectedId(null);
-  }
+  // function handleCloseMovie() {
+  //   setSelectedId(null);
+  // }
 
-  function handleAddWatched(movie) {
-    setWatched((watched) => [...watched, movie]);
-  }
+  // function handleAddWatched(movie) {
+  //   setWatched((watched) => [...watched, movie]);
+  // }
 
-  function handleDeleteWatched(id) {
-    setWatched((watched) => watched.filter((movie) => movie.imdbID !== id));
-  }
+  // function handleDeleteWatched(id) {
+  //   setWatched((watched) => watched.filter((movie) => movie.imdbID !== id));
+  // }
 
   //Hanle logout
   function handleLogout() {
     localStorage.clear();
     setLoggedInUsername('');
-    setWatched([]);
+    // setWatched([]);
   }
 
   return (
@@ -266,8 +267,7 @@ export default function Home({ movieId }) {
         {fanFavoritesError && <ErrorMessage message={fanFavoritesError} />}
 
         <PopularCelebrities celebrities={celebrities} />
-        <Box>
-          {/* {isLoading ? <Loader /> : <MovieList movies={movies} />} */}
+        {/* <Box>
           {isLoading && <Loader />}
           {!isLoading && !error && (
             <MovieList movies={movies} onSelectMovie={handleSelectMovie} />
@@ -292,8 +292,9 @@ export default function Home({ movieId }) {
               />
             </>
           )}
-        </Box>
+        </Box> */}
       </Main>
+      <Footer />
     </>
   );
 }

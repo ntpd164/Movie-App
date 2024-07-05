@@ -22,7 +22,7 @@ export default function PopularCelebrities({ celebrities }) {
   );
 
   return (
-    <div id="popular-celebrities" className="mx-[140px] mb-[200px] pt-[30px]">
+    <div id="popular-celebrities" className="mx-[140px] pt-[30px]">
       <div>
         <div className="mb-4 flex">
           <div className="mr-4 rounded-sm border-2 border-primary"></div>
@@ -52,7 +52,7 @@ export default function PopularCelebrities({ celebrities }) {
             </div>
           ))}
           <button
-            className="absolute -right-24 top-[44%] z-20 cursor-pointer rounded-md border border-zinc-400 px-6 pb-3 pt-1 text-[30px]"
+            className="absolute -right-24 top-[34%] z-20 cursor-pointer rounded-md border border-zinc-400 px-6 pb-3 pt-1 text-[30px]"
             onClick={handleNext}
           >
             {'>'}
