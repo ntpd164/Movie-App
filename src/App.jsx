@@ -1,6 +1,7 @@
 import Login from './ui/Login';
 import Home from './ui/Home';
 import UserProfile from './ui/UserProfile';
+import MoviePage from './ui/MoviePage';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
 const router = createBrowserRouter([
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
       {
         path: '/user/profile',
         element: <UserProfile />,
+      },
+      {
+        path: '/movie/:selectedId',
+        element: <MoviePage />,
       },
       // {
       //   path: '/movie/:selectedId',

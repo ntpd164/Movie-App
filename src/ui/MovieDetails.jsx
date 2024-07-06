@@ -70,16 +70,15 @@ function MovieDetails({ selectedId, onAddWatched, watched = [], username }) {
     setTimeout(() => setShowPopup(false), 3000);
     console.log(newWatchedMovie);
   }
-
   return (
-    <div>
+    <div className="">
       {isLoading ? (
         <Loader />
       ) : (
         <>
           <header className="flex ">
             <img className=" w-1/3" src={movie.Poster}></img>
-            <div className="bg-background-100 px-8 py-8">
+            <div className=" px-8 py-8">
               <h2 className="mb-8 items-center text-5xl">{movie.Title}</h2>
               <div className="space-y-4 text-2xl">
                 <p>
@@ -102,7 +101,7 @@ function MovieDetails({ selectedId, onAddWatched, watched = [], username }) {
             </div>
           </header>
 
-          <section className="text-center">
+          <section className=" text-center">
             <div className="flex flex-col items-center justify-center py-16">
               {!isWatched ? (
                 <>

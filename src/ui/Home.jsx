@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-// import { useMovies } from '../useMovies';
+import { useMovies } from '../useMovies';
 
 import NavBar from './NavBar';
 import Loader from './Loader';
@@ -9,11 +9,11 @@ import Menu from './Menu';
 // import NumResults from './NumResults';
 import UserInfo from './UserInfo';
 import Main from './Main';
-// import Box from './Box';
-// import MovieList from './MovieList';
+import Box from './Box';
+import MovieList from './MovieList';
 // import MovieDetails from './MovieDetails';
 // import WatchedSummary from './WatchedSummary';
-// import useLocalStorageState from '../useLocalStorageState';
+import useLocalStorageState from '../useLocalStorageState';
 // import WatchedMoviesList from './WatchedMoviesList';
 import Header from './Header';
 import TopPicks from './TopPicks';
@@ -21,17 +21,20 @@ import FanFavorites from './FanFavorites';
 import PopularCelebrities from './PopularCelebrities';
 import Footer from './Footer';
 import { useMoviesById } from '../useMoviesById';
+// import { useNavigate } from 'react-router-dom';
 
 // const KEY = 'd8bed612';
 
-export default function Home() {
+export default function Home({ movieId }) {
   const [query, setQuery] = useState('');
-  // const [selectedId, setSelectedId] = useState(movieId ? movieId : null);
-  // const { movies, isLoading, error } = useMovies(query);
+  const [selectedId, setSelectedId] = useState(movieId ? movieId : null);
+  const { movies, isLoading, error } = useMovies(query);
 
-  // const [watched, setWatched] = useLocalStorageState([], 'watched');
+  const [watched, setWatched] = useLocalStorageState([], 'watched');
 
   const [loggedInUsername, setLoggedInUsername] = useState('');
+
+  // const navigate = useNavigate();
 
   const topPicksMovieIds = [
     'tt0468569',
@@ -214,18 +217,19 @@ export default function Home() {
     }
   }, []); // Load username từ localStorage khi component được mount lần đầu
 
-  // function handleSelectMovie(id) {
-  //   setSelectedId((selectedId) => (id === selectedId ? null : id));
-  //   console.log(id);
-  // }
+  function handleSelectMovie(id) {
+    setSelectedId((selectedId) => (id === selectedId ? null : id));
+    console.log(id);
+    // navigate(`/movie/${id}`);
+  }
 
-  // function handleCloseMovie() {
-  //   setSelectedId(null);
-  // }
+  function handleCloseMovie() {
+    setSelectedId(null);
+  }
 
-  // function handleAddWatched(movie) {
-  //   setWatched((watched) => [...watched, movie]);
-  // }
+  function handleAddWatched(movie) {
+    setWatched((watched) => [...watched, movie]);
+  }
 
   // function handleDeleteWatched(id) {
   //   setWatched((watched) => watched.filter((movie) => movie.imdbID !== id));
@@ -235,7 +239,7 @@ export default function Home() {
   function handleLogout() {
     localStorage.clear();
     setLoggedInUsername('');
-    // setWatched([]);
+    setWatched([]);
   }
 
   return (
@@ -244,7 +248,44 @@ export default function Home() {
         <NavBar>
           <Logo />
           <Menu />
-          <Search query={query} setQuery={setQuery} />
+          <Search
+            query={query}
+            setQuery={setQuery}
+            selectedId={selectedId}
+            setSelectedId={setSelectedId}
+            onCloseMovie={handleCloseMovie}
+            onAddWatched={handleAddWatched}
+            watched={watched}
+            username={loggedInUsername}
+            movies={movies}
+          >
+            <Box>
+              {isLoading && <Loader />}
+              {!isLoading && !error && (
+                <MovieList movies={movies} onSelectMovie={handleSelectMovie} />
+              )}
+              {error && <ErrorMessage message={error} />}
+            </Box>
+            {/* <Box>
+              {selectedId ? (
+                <MovieDetails
+                  selectedId={selectedId}
+                  onCloseMovie={handleCloseMovie}
+                  onAddWatched={handleAddWatched}
+                  watched={watched}
+                  username={loggedInUsername}
+                />
+              ) : (
+                <>
+                  <WatchedSummary watched={watched} />
+                  <WatchedMoviesList
+                    watched={watched}
+                    onDeleteWatched={handleDeleteWatched}
+                  />
+                </>
+              )}
+            </Box> */}
+          </Search>
           <UserInfo username={loggedInUsername} onLogout={handleLogout} />
         </NavBar>
 
