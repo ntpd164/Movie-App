@@ -1,8 +1,11 @@
-import Login from './ui/Login';
-import Home from './ui/Home';
+import Login from './pages/Login';
+import Home from './pages/Home';
+import WatchList from './pages/WatchList';
 import UserProfile from './ui/UserProfile';
 import MoviePage from './ui/MoviePage';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+
+const username = localStorage.getItem('loggedInUsername');
 
 const router = createBrowserRouter([
   {
@@ -24,6 +27,10 @@ const router = createBrowserRouter([
       {
         path: '/movie/:selectedId',
         element: <MoviePage />,
+      },
+      {
+        path: '/watchlist',
+        element: <WatchList username={username} />,
       },
       // {
       //   path: '/movie/:selectedId',

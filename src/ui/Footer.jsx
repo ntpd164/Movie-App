@@ -8,8 +8,9 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useNavigate } from 'react-router-dom';
 
-export default function Footer({ username }) {
+export default function Footer() {
   const navigate = useNavigate();
+  const username = localStorage.getItem('loggedInUsername');
 
   function handleSignIn() {
     navigate('/login');

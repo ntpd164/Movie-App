@@ -1,25 +1,25 @@
 import { useState, useEffect } from 'react';
 import { useMovies } from '../useMovies';
 
-import NavBar from './NavBar';
-import Loader from './Loader';
-import Search from './Search';
-import Logo from './Logo';
-import Menu from './Menu';
+import NavBar from '../ui/NavBar';
+import Loader from '../ui/Loader';
+import Search from '../ui/Search';
+import Logo from '../ui/Logo';
+import Menu from '../ui/Menu';
 // import NumResults from './NumResults';
-import UserInfo from './UserInfo';
-import Main from './Main';
-import Box from './Box';
-import MovieList from './MovieList';
+import UserInfo from '../ui/UserInfo';
+import Main from '../ui/Main';
+import Box from '../ui/Box';
+import MovieList from '../ui/MovieList';
 // import MovieDetails from './MovieDetails';
 // import WatchedSummary from './WatchedSummary';
 import useLocalStorageState from '../useLocalStorageState';
 // import WatchedMoviesList from './WatchedMoviesList';
-import Header from './Header';
-import TopPicks from './TopPicks';
-import FanFavorites from './FanFavorites';
-import PopularCelebrities from './PopularCelebrities';
-import Footer from './Footer';
+import Header from '../ui/Header';
+import TopPicks from '../ui/TopPicks';
+import FanFavorites from '../ui/FanFavorites';
+import PopularCelebrities from '../ui/PopularCelebrities';
+import Footer from '../ui/Footer';
 import { useMoviesById } from '../useMoviesById';
 // import { useNavigate } from 'react-router-dom';
 
@@ -340,7 +340,7 @@ export default function Home({ movieId }) {
           )}
         </Box> */}
       </Main>
-      <Footer username={loggedInUsername} />
+      <Footer />
     </>
   );
 }

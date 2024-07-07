@@ -14,7 +14,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 // import useLocalStorageState from '../useLocalStorageState';
 import { useState, useEffect } from 'react';
-import Footer from './Footer';
+import Footer from '../ui/Footer';
 
 function Login() {
   const user = useSelector((state) => state.user);

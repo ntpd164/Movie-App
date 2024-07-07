@@ -60,7 +60,11 @@ function MovieDetails({ selectedId, onAddWatched, watched = [], username }) {
       title: movie.Title,
       year: movie.Year,
       poster: movie.Poster,
+      director: movie.Director,
+      actors: movie.Actors.split(', '),
+      plot: movie.Plot,
       imdbRating: Number(movie.imdbRating),
+      imdbVotes: movie.imdbVotes,
       runtime: Number(movie.Runtime.split(' ')[0]),
       userRating,
     };
