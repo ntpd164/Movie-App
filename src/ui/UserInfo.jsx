@@ -25,9 +25,15 @@ function UserInfo({ username, onLogout }) {
     }
   }
 
-  function handleProfile() {
+  function onUserProfile() {
     if (username !== '') {
       navigate('/user/profile');
+    }
+  }
+
+  function onWatchlist() {
+    if (username !== '') {
+      navigate('/user/watchlist');
     }
   }
 
@@ -50,18 +56,18 @@ function UserInfo({ username, onLogout }) {
                 <a
                   className=" block px-6 py-2 text-3xl text-[#706f6f]"
                   href="#"
-                  onClick={handleProfile}
+                  onClick={onUserProfile}
                 >
                   Profile
                 </a>
               </li>
               <li className=" hover:bg-[#e9e9e9]">
-                <a
+                <button
                   className=" block px-6 py-2 text-3xl text-[#706f6f]"
-                  href="#"
+                  onClick={onWatchlist}
                 >
-                  Help
-                </a>
+                  Watchlist
+                </button>
               </li>
               <li className=" hover:bg-[#e9e9e9]">
                 <a

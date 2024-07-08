@@ -10,14 +10,17 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import Footer from '../ui/Footer';
 
-export default function WatchList({ username }) {
+export default function WatchList() {
   const navigate = useNavigate();
+  const username = localStorage.getItem('loggedInUsername');
   const [showOrderMenu, setShowOrderMenu] = useState(false);
   const [order, setOrder] = useState('List order');
   const [sortDirection, setSortDirection] = useState('asc');
   const [watched, setWatched] = useState(
     JSON.parse(localStorage.getItem('watched')) || []
   );
+  const [modeDisplay, setModeDisplay] = useState('details');
+
   console.log('Watched: ', watched);
 
   document.title = 'Your Watchlist';
@@ -89,16 +92,21 @@ export default function WatchList({ username }) {
     setWatched(sortedWatched);
   }
 
+  function handleModeChange(mode) {
+    console.log('Mode: ', mode);
+    setModeDisplay(mode);
+  }
+
   return (
     <div>
       <div
         onClick={handleBack}
-        className="ml-20 mt-20 w-[14%] cursor-pointer rounded-lg bg-primary px-6 py-4 font-poppins-semibold text-4xl font-semibold text-black hover:bg-[#deca17]"
+        className="ml-20 mt-20 w-[8%] cursor-pointer rounded-lg bg-primary px-6 py-4 font-poppins-semibold text-4xl font-semibold text-black hover:bg-[#deca17]"
       >
         <button>
           <FontAwesomeIcon icon={faArrowLeft} className="" />
         </button>
-        <span className="ml-4">Back to home</span>
+        <span className="ml-4">Back</span>
       </div>
       <div className="my-20 ml-28 text-2xl">
         <h2 className="text-5xl font-semibold text-white">Your Watchlist</h2>
@@ -121,7 +129,7 @@ export default function WatchList({ username }) {
             <span>{watched.length}</span>
             {watched.length > 1 ? ' movies' : ' movie'}
           </div>
-          <div className="ml-[60rem] flex">
+          <div className="ml-[45rem] flex">
             <span className="mt-3">Sort by</span>
             <div
               onClick={handleShowOrderMenu}
@@ -205,70 +213,223 @@ export default function WatchList({ username }) {
                 />
               </div>
             </div>
+            <div
+              onClick={() => handleModeChange('details')}
+              className="relative ml-[8rem] "
+            >
+              <div className="absolute -top-6 cursor-pointer rounded-full px-12 py-12 hover:bg-[#ededed]">
+                <div className="absolute left-6 top-[1.1rem] flex">
+                  <div
+                    className={`absolute top-4 h-2 w-2 rounded-full ${
+                      modeDisplay === 'details'
+                        ? 'bg-[#0472d2]'
+                        : 'bg-[#5f5e5e]'
+                    } text-3xl`}
+                  ></div>
+                  <div
+                    className={`absolute left-[0.6rem] top-4 h-2 w-10 rounded-xl ${
+                      modeDisplay === 'details'
+                        ? 'bg-[#0472d2]'
+                        : 'bg-[#5f5e5e]'
+                    }`}
+                  ></div>
+                </div>
+                <div className="absolute left-6 top-4 flex">
+                  <div
+                    className={`absolute top-7 h-2 w-2 rounded-full ${
+                      modeDisplay === 'details'
+                        ? 'bg-[#0472d2]'
+                        : 'bg-[#5f5e5e]'
+                    } text-3xl`}
+                  ></div>
+                  <div
+                    className={`absolute left-[0.6rem] top-7 h-2 w-10 rounded-xl ${
+                      modeDisplay === 'details'
+                        ? 'bg-[#0472d2]'
+                        : 'bg-[#5f5e5e]'
+                    }`}
+                  ></div>
+                </div>
+                <div className="absolute left-6 top-[0.9rem] flex">
+                  <div
+                    className={`absolute top-10 h-2 w-2 rounded-full ${
+                      modeDisplay === 'details'
+                        ? 'bg-[#0472d2]'
+                        : 'bg-[#5f5e5e]'
+                    } text-3xl`}
+                  ></div>
+                  <div
+                    className={`absolute left-[0.6rem] top-10 h-2 w-10 rounded-xl ${
+                      modeDisplay === 'details'
+                        ? 'bg-[#0472d2]'
+                        : 'bg-[#5f5e5e]'
+                    }`}
+                  ></div>
+                </div>
+              </div>
+            </div>
+            <div
+              onClick={() => handleModeChange('grid')}
+              className="relative ml-[7rem] "
+            >
+              <div className="absolute -left-4 -top-6 cursor-pointer rounded-full py-10 pb-14 pl-20 pr-4  hover:bg-[#ededed]">
+                <div className="absolute left-8 top-4 flex">
+                  <div
+                    className={`absolute top-4 h-2 w-2 rounded-sm ${
+                      modeDisplay === 'grid' ? 'bg-[#0472d2]' : 'bg-[#5f5e5e]'
+                    } text-3xl`}
+                  ></div>
+                  <div
+                    className={`absolute left-3 top-4 h-2 w-2 rounded-sm ${
+                      modeDisplay === 'grid' ? 'bg-[#0472d2]' : 'bg-[#5f5e5e]'
+                    } text-3xl`}
+                  ></div>
+                  <div
+                    className={`absolute left-6 top-4 h-2 w-2 rounded-sm ${
+                      modeDisplay === 'grid' ? 'bg-[#0472d2]' : 'bg-[#5f5e5e]'
+                    } text-3xl`}
+                  ></div>
+                </div>
+                <div className="absolute left-8 top-7 flex">
+                  <div
+                    className={`absolute top-4 h-2 w-2 rounded-sm ${
+                      modeDisplay === 'grid' ? 'bg-[#0472d2]' : 'bg-[#5f5e5e]'
+                    } text-3xl`}
+                  ></div>
+                  <div
+                    className={`absolute left-3 top-4 h-2 w-2 rounded-sm ${
+                      modeDisplay === 'grid' ? 'bg-[#0472d2]' : 'bg-[#5f5e5e]'
+                    } text-3xl`}
+                  ></div>
+                  <div
+                    className={`absolute left-6 top-4 h-2 w-2 rounded-sm ${
+                      modeDisplay === 'grid' ? 'bg-[#0472d2]' : 'bg-[#5f5e5e]'
+                    } text-3xl`}
+                  ></div>
+                </div>
+                <div className="absolute left-8 top-10 flex">
+                  <div
+                    className={`absolute top-4 h-2 w-2 rounded-sm ${
+                      modeDisplay === 'grid' ? 'bg-[#0472d2]' : 'bg-[#5f5e5e]'
+                    } text-3xl`}
+                  ></div>
+                  <div
+                    className={`absolute left-3 top-4 h-2 w-2 rounded-sm ${
+                      modeDisplay === 'grid' ? 'bg-[#0472d2]' : 'bg-[#5f5e5e]'
+                    } text-3xl`}
+                  ></div>
+                  <div
+                    className={`absolute left-6 top-4 h-2 w-2 rounded-sm ${
+                      modeDisplay === 'grid' ? 'bg-[#0472d2]' : 'bg-[#5f5e5e]'
+                    } text-3xl`}
+                  ></div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-        <div className="w-2/3 rounded-md border border-zinc-400 pb-10 pt-14">
-          {watched.map((movie, index) => (
-            <div key={movie.imdbID} className="mb-10 ml-10">
-              <div className="flex">
-                <img
-                  className="w-1/8 h-[120px]"
-                  src={movie.poster}
-                  alt={movie.title}
-                />
-                <div className="my-auto ml-4">
-                  <h2 className=" font-poppins-medium text-3xl font-semibold text-black">
-                    {index + 1}. {movie.title}
-                  </h2>
-                  <div className="mt-4 flex items-center font-poppins-medium text-2xl font-light text-[#7a7a7a]">
-                    <span className="mr-6">{movie.year}</span>
-                    <span>{movie.runtime} minutes</span>
-                  </div>
-                  <div className="relative -ml-1 mt-4 flex items-center font-poppins-medium text-2xl font-light text-[#7a7a7a]">
-                    <FontAwesomeIcon
-                      icon={faStar}
-                      className="absolute left-1 top-[1px] text-primary"
-                    />
-                    <span className="ml-10 mr-2">{movie.imdbRating}</span>
-                    <span className="">({movie.imdbVotes})</span>
-                    <div className="relative ml-14">
+        {modeDisplay === 'details' && (
+          <div className="w-2/3 rounded-md border border-zinc-400 pb-10 pt-14">
+            {watched.map((movie, index) => (
+              <div key={movie.imdbID} className="mb-10 ml-10">
+                <div className="flex">
+                  <img
+                    className="w-1/8 h-[120px]"
+                    src={movie.poster}
+                    alt={movie.title}
+                  />
+                  <div className="my-auto ml-4">
+                    <h2 className=" font-poppins-medium text-3xl font-semibold text-black">
+                      {index + 1}. {movie.title}
+                    </h2>
+                    <div className="mt-4 flex items-center font-poppins-medium text-2xl font-light text-[#7a7a7a]">
+                      <span className="mr-6">{movie.year}</span>
+                      <span>{movie.runtime} minutes</span>
+                    </div>
+                    <div className="relative -ml-1 mt-4 flex items-center font-poppins-medium text-2xl font-light text-[#7a7a7a]">
                       <FontAwesomeIcon
                         icon={faStar}
-                        className="absolute left-0 top-[1px] text-[#116bd9]"
+                        className="absolute left-1 top-[1px] text-primary"
                       />
-                      <span className="ml-9">{movie.userRating}</span>
+                      <span className="ml-10 mr-2">{movie.imdbRating}</span>
+                      <span className="">({movie.imdbVotes})</span>
+                      <div className="relative ml-14">
+                        <FontAwesomeIcon
+                          icon={faStar}
+                          className="absolute left-0 top-[1px] text-[#116bd9]"
+                        />
+                        <span className="ml-9">{movie.userRating}</span>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <p className="mt-4 font-poppins-medium text-2xl font-thin text-black">
-                {movie.plot}
-              </p>
-              <div className="mt-4 flex font-poppins-medium text-2xl font-thin text-black">
-                <span className=" font-poppins-regular font-bold">
-                  Director
-                </span>
-                <span className="mx-4 cursor-pointer text-[#02679d] hover:underline">
-                  {movie.director}
-                </span>
-                <span className="mr-4 font-poppins-regular font-bold">
-                  Stars
-                </span>
-                {movie.actors.map((actor, index) => (
-                  <span
-                    key={index}
-                    className="mr-4 cursor-pointer text-[#02679d] hover:underline"
-                  >
-                    {actor}
+                <p className="mt-4 font-poppins-medium text-2xl font-thin text-black">
+                  {movie.plot}
+                </p>
+                <div className="mt-4 flex font-poppins-medium text-2xl font-thin text-black">
+                  <span className=" font-poppins-regular font-bold">
+                    Director
                   </span>
-                ))}
+                  <span className="mx-4 cursor-pointer text-[#02679d] hover:underline">
+                    {movie.director}
+                  </span>
+                  <span className="mr-4 font-poppins-regular font-bold">
+                    Stars
+                  </span>
+                  {movie.actors.map((actor, index) => (
+                    <span
+                      key={index}
+                      className="mr-4 cursor-pointer text-[#02679d] hover:underline"
+                    >
+                      {actor}
+                    </span>
+                  ))}
+                </div>
+                {index < watched.length - 1 && (
+                  <div className="mr-10 mt-4 border"></div>
+                )}
               </div>
-              {index < watched.length - 1 && (
-                <div className="mr-10 mt-4 border"></div>
-              )}
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
+        {modeDisplay === 'grid' && (
+          <div className="grid w-2/3 grid-cols-4 gap-10">
+            {watched.map((movie, index) => (
+              <div
+                key={movie.imdbID}
+                className="flex flex-col items-center rounded-md border border-zinc-400 shadow-lg"
+              >
+                <img
+                  className="mb-4  h-[30rem] w-full"
+                  src={movie.poster}
+                  alt={movie.title}
+                />
+                <h2 className=" px-10 font-poppins-medium text-2xl font-semibold text-black">
+                  {index + 1}. {movie.title}
+                </h2>
+                <div className="mt-4 flex items-center font-poppins-medium text-2xl font-light text-[#7a7a7a]">
+                  <span className="mr-6">{movie.year}</span>
+                  <span>{movie.runtime} minutes</span>
+                </div>
+                <div className="relative my-4 -ml-1 flex items-center font-poppins-medium text-2xl font-light text-[#7a7a7a]">
+                  <FontAwesomeIcon
+                    icon={faStar}
+                    className="absolute left-1 top-[1px] text-primary"
+                  />
+                  <span className="ml-10 mr-2">{movie.imdbRating}</span>
+                  <span className="">({movie.imdbVotes})</span>
+                  <div className="relative ml-14">
+                    <FontAwesomeIcon
+                      icon={faStar}
+                      className="absolute left-0 top-[1px] text-[#116bd9]"
+                    />
+                    <span className="ml-9">{movie.userRating}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
       <Footer />
     </div>

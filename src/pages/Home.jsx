@@ -247,7 +247,7 @@ export default function Home({ movieId }) {
       <Header images={images}>
         <NavBar>
           <Logo />
-          <Menu />
+          <Menu username={loggedInUsername} />
           <Search
             query={query}
             setQuery={setQuery}
