@@ -36,6 +36,8 @@ export default function Home({ movieId }) {
 
   // const navigate = useNavigate();
 
+  document.title = 'DN Movie';
+
   const topPicksMovieIds = [
     'tt0468569',
     'tt0167260',
@@ -311,7 +313,14 @@ export default function Home({ movieId }) {
         {!fanFavoritesIsLoading &&
           !fanFavoritesError &&
           (console.log(fanFavoritesMovies),
-          (<FanFavorites fanFavoritesMovies={fanFavoritesMovies} />))}
+          (
+            <FanFavorites
+              username={loggedInUsername}
+              fanFavoritesMovies={fanFavoritesMovies}
+              onAddWatched={handleAddWatched}
+              watched={watched}
+            />
+          ))}
         {fanFavoritesError && <ErrorMessage message={fanFavoritesError} />}
 
         <PopularCelebrities celebrities={celebrities} />
