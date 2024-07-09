@@ -40,10 +40,10 @@ function MovieDetails({ selectedId, onAddWatched, watched = [], username }) {
   useEffect(
     function () {
       if (!movie.Title) return;
-      document.title = `Movie | ${movie.Title}`;
+      document.title = `DN Movie | ${movie.Title}`;
 
       return function () {
-        document.title = 'DNC';
+        document.title = 'DN Movie';
       };
     },
     [movie.Title]

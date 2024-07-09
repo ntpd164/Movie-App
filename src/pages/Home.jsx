@@ -302,6 +302,8 @@ export default function Home({ movieId }) {
             <TopPicks
               username={loggedInUsername}
               topPicksMovies={topPicksMovies}
+              onAddWatched={handleAddWatched}
+              watched={watched}
             />
           ))}
         {topPicksError && <ErrorMessage message={topPicksError} />}
