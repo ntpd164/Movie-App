@@ -115,7 +115,10 @@ export default function TopPicks({
       )}
       <div>
         <div>
-          <div className="mb-4 flex">
+          <div
+            onClick={() => navigate('/top-picks')}
+            className="group mb-4 flex w-[18rem] cursor-pointer"
+          >
             <div className="mr-4 rounded-sm border-2 border-primary"></div>
             <h2 className="font-poppins-semibold text-5xl font-semibold text-white">
               Top picks
@@ -123,7 +126,7 @@ export default function TopPicks({
             <a className="relative">
               <FontAwesomeIcon
                 icon={faChevronRight}
-                className="absolute left-2 top-1 ml-4 text-4xl text-white"
+                className="absolute left-2 top-2 ml-4 text-4xl text-white transition-all duration-300 ease-in-out group-hover:text-primary"
               />
             </a>
           </div>

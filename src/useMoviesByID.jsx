@@ -11,7 +11,6 @@ export function useMoviesById(initialMovieIds) {
 
   useEffect(() => {
     const controller = new AbortController();
-
     async function fetchMoviesById() {
       try {
         setIsLoading(true);
@@ -31,6 +30,7 @@ export function useMoviesById(initialMovieIds) {
               throw new Error('Something went wrong with fetching movie by ID');
 
             const data = await res.json();
+            console.log('data: ', data);
             if (data.Response === 'False') throw new Error('Movie not found');
 
             cache.current[id] = data;

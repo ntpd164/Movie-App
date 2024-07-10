@@ -1,6 +1,7 @@
 import Login from './pages/Login';
 import Home from './pages/Home';
 import WatchList from './pages/WatchList';
+import TopPicksOverview from './pages/TopPicksOverview';
 import UserProfile from './ui/UserProfile';
 import MoviePage from './ui/MoviePage';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
       {
         path: '/movie/:selectedId',
         element: <MoviePage />,
+      },
+      {
+        path: '/top-picks',
+        element: <TopPicksOverview />,
       },
       {
         path: '/user/watchlist',

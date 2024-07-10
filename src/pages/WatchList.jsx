@@ -1,17 +1,15 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faArrowLeft,
   faStar,
   faChevronCircleDown,
   faUpLong,
   faDownLong,
 } from '@fortawesome/free-solid-svg-icons';
-import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import Footer from '../ui/Footer';
+import BackButton from '../ui/BackButton';
 
 export default function WatchList() {
-  const navigate = useNavigate();
   const username = localStorage.getItem('loggedInUsername');
   const [showOrderMenu, setShowOrderMenu] = useState(false);
   const [order, setOrder] = useState('List order');
@@ -24,10 +22,6 @@ export default function WatchList() {
   console.log('Watched: ', watched);
 
   document.title = 'Your Watchlist';
-
-  function handleBack() {
-    navigate('/');
-  }
 
   function handleShowOrderMenu() {
     setShowOrderMenu(!showOrderMenu);
@@ -99,15 +93,7 @@ export default function WatchList() {
 
   return (
     <div>
-      <div
-        onClick={handleBack}
-        className="ml-20 mt-20 w-[8%] cursor-pointer rounded-lg bg-primary px-6 py-4 font-poppins-semibold text-4xl font-semibold text-black hover:bg-[#deca17]"
-      >
-        <button>
-          <FontAwesomeIcon icon={faArrowLeft} className="" />
-        </button>
-        <span className="ml-4">Back</span>
-      </div>
+      <BackButton />
       <div className="my-20 ml-28 text-2xl">
         <h2 className="text-5xl font-semibold text-white">Your Watchlist</h2>
         <div className="relative mt-8">
