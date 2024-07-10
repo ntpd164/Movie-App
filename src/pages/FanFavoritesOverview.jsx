@@ -14,7 +14,7 @@ import { useMoviesById } from '../useMoviesById';
 import BackButton from '../ui/BackButton';
 import Footer from '../ui/Footer';
 
-export default function TopPicksOverview() {
+export default function FanFavoritesOverview() {
   const [userRating, setUserRating] = useState('');
   const [showRating, setShowRating] = useState(false);
   const [showPopupSuccess, setShowPopupSuccess] = useState(false);
@@ -22,40 +22,40 @@ export default function TopPicksOverview() {
   const [currentMovie, setCurrentMovie] = useState(null);
   const navigate = useNavigate();
 
-  document.title = 'Top Picks Overview';
+  document.title = 'Fan Favorites Overview';
 
-  const topPicksMovieIds = [
-    'tt0468569',
-    'tt0167260',
-    'tt0111161',
-    'tt0108052',
-    'tt0114369',
-    'tt0816692',
-    'tt1375666',
-    'tt1745960',
-    'tt0060196',
-    'tt0120737',
-    'tt0073486',
-    'tt0372784',
-    'tt2582802',
-    'tt0120815',
-    'tt0944947',
+  const fanFavoritesIds = [
+    'tt22022452',
+    'tt12037194',
+    'tt12735488',
+    'tt15239678',
+    'tt1190634',
+    'tt1684562',
+    'tt23289160',
+    'tt11198330',
+    'tt19231492',
+    'tt12637874',
+    'tt17279496',
+    'tt2096673',
     'tt0903747',
-    'tt0068646',
-    'tt0172495',
-    'tt0407887',
-    'tt4154756',
-    'tt7286456',
-    'tt2788316',
-    'tt0773262',
-    'tt0086250',
+    'tt0944947',
+    'tt22408160',
+    'tt14452776',
+    'tt0086960',
+    'tt21454134',
+    'tt16426418',
+    'tt1392190',
+    'tt14230458',
+    'tt0378194',
+    'tt1160419',
+    'tt3581920',
   ];
 
   const {
-    movies: topPicksMovies,
-    isLoading: topPicksIsLoading,
-    error: topPicksError,
-  } = useMoviesById(topPicksMovieIds);
+    movies: fanFavoritesMovies,
+    isLoading: fanFavoritesIsLoading,
+    error: fanFavoritesError,
+  } = useMoviesById(fanFavoritesIds);
 
   const watched = JSON.parse(localStorage.getItem('watched')) || [];
   console.log('watched: ', watched);
@@ -122,23 +122,24 @@ export default function TopPicksOverview() {
         What to watch
       </h1>
       <div className="ml-[12rem] mt-20 flex">
+        <div>
+          <button
+            onClick={() => navigate('/top-picks')}
+            className="px-10 py-6 font-poppins-semibold text-3xl font-semibold uppercase text-white hover:bg-background-500"
+          >
+            top picks
+          </button>
+        </div>
         <div
-          onClick={() => navigate('/top-picks')}
+          onClick={() => navigate('/fan-favorites')}
           className="relative cursor-pointer"
         >
           <div className="px-10 py-6 font-poppins-semibold text-3xl font-semibold uppercase text-white hover:bg-background-500">
-            top picks
+            fan favorites
           </div>
           <div className="absolute bottom-[0.125rem] w-full border-2 border-blue-400"></div>
         </div>
-        <div>
-          <button
-            onClick={() => navigate('/fan-favorites')}
-            className="px-10 py-6 font-poppins-semibold text-3xl font-semibold uppercase text-white hover:bg-background-500"
-          >
-            fan favorites
-          </button>
-        </div>
+
         <div>
           <button
             onClick={() => navigate('/watchlist')}
@@ -148,11 +149,11 @@ export default function TopPicksOverview() {
           </button>
         </div>
       </div>
-      {topPicksIsLoading && <div>Loading...</div>}
-      {topPicksError && <div>Error fetching data</div>}
-      {!topPicksIsLoading && !topPicksError && (
+      {fanFavoritesIsLoading && <div>Loading...</div>}
+      {fanFavoritesError && <div>Error fetching data</div>}
+      {!fanFavoritesIsLoading && !fanFavoritesError && (
         <div className={`mx-[14rem] mt-20 grid grid-cols-6 gap-10`}>
-          {topPicksMovies.map((movie, index) => (
+          {fanFavoritesMovies.map((movie, index) => (
             <div key={index} className="">
               <img
                 src={movie.Poster}

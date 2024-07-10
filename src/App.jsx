@@ -2,6 +2,8 @@ import Login from './pages/Login';
 import Home from './pages/Home';
 import WatchList from './pages/WatchList';
 import TopPicksOverview from './pages/TopPicksOverview';
+import WatchListOverview from './pages/WatchListOverview';
+import FanFavoritesOverview from './pages/FanFavoritesOverview';
 import UserProfile from './ui/UserProfile';
 import MoviePage from './ui/MoviePage';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
@@ -30,6 +32,14 @@ const router = createBrowserRouter([
       {
         path: '/top-picks',
         element: <TopPicksOverview />,
+      },
+      {
+        path: '/fan-favorites',
+        element: <FanFavoritesOverview />,
+      },
+      {
+        path: '/watchlist',
+        element: <WatchListOverview />,
       },
       {
         path: '/user/watchlist',
