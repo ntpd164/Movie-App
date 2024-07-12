@@ -4,7 +4,7 @@ import WatchList from './pages/WatchList';
 import TopPicksOverview from './pages/TopPicksOverview';
 import WatchListOverview from './pages/WatchListOverview';
 import FanFavoritesOverview from './pages/FanFavoritesOverview';
-import UserProfile from './ui/UserProfile';
+import UserProfile from './pages/UserProfile';
 import MoviePage from './ui/MoviePage';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 

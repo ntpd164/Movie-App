@@ -50,7 +50,7 @@ export default function Home({ movieId }) {
     'tt0060196',
     'tt0120737',
     'tt0073486',
-    'tt0372784',
+    'tt0944947',
   ];
 
   const fanFavoritesMovieIds = [
@@ -233,9 +233,9 @@ export default function Home({ movieId }) {
     setWatched((watched) => [...watched, movie]);
   }
 
-  // function handleDeleteWatched(id) {
-  //   setWatched((watched) => watched.filter((movie) => movie.imdbID !== id));
-  // }
+  function handleDeleteWatched(id) {
+    setWatched((watched) => watched.filter((movie) => movie.imdbID !== id));
+  }
 
   //Hanle logout
   function handleLogout() {
@@ -305,6 +305,7 @@ export default function Home({ movieId }) {
               username={loggedInUsername}
               topPicksMovies={topPicksMovies}
               onAddWatched={handleAddWatched}
+              onDeleteWatched={handleDeleteWatched}
               watched={watched}
             />
           ))}
