@@ -227,6 +227,14 @@ export default function TopPicksOverview() {
                     icon={faStar}
                     className="mx-auto mt-10 flex text-[8rem] text-blue-400"
                   />
+                  <div className="absolute right-3 top-2 text-red-dark">
+                    <button
+                      className=" text-5xl "
+                      onClick={() => setShowRating(false)}
+                    >
+                      <FontAwesomeIcon icon={faCircleXmark} />
+                    </button>
+                  </div>
                   <div className="">
                     <p className="my-10 flex justify-center font-poppins-regular text-4xl font-semibold text-primary">
                       Please rate the movie!

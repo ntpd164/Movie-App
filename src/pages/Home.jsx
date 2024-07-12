@@ -319,6 +319,7 @@ export default function Home({ movieId }) {
               username={loggedInUsername}
               fanFavoritesMovies={fanFavoritesMovies}
               onAddWatched={handleAddWatched}
+              onDeleteWatched={handleDeleteWatched}
               watched={watched}
             />
           ))}
