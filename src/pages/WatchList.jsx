@@ -4,8 +4,9 @@ import {
   faChevronCircleDown,
   faUpLong,
   faDownLong,
+  faChevronUp,
 } from '@fortawesome/free-solid-svg-icons';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Footer from '../ui/Footer';
 import BackButton from '../ui/BackButton';
 
@@ -18,6 +19,24 @@ export default function WatchList() {
     JSON.parse(localStorage.getItem('watched')) || []
   );
   const [modeDisplay, setModeDisplay] = useState('details');
+  const [showBtnBackToTop, setShowBtnBackToTop] = useState(false);
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowBtnBackToTop(window.scrollY > innerHeight);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   console.log('Watched: ', watched);
 
@@ -94,6 +113,18 @@ export default function WatchList() {
   return (
     <div>
       <BackButton />
+      {showBtnBackToTop && (
+        <div className="fixed right-[46%] top-10 z-10 w-[130px] cursor-pointer rounded-full bg-primary py-4 pl-5 pr-4 font-poppins-bold text-2xl font-medium text-black hover:bg-[#deca17]">
+          <FontAwesomeIcon
+            icon={faChevronUp}
+            className="fixed top-[37px] text-3xl"
+            onClick={scrollToTop}
+          />
+          <button onClick={scrollToTop} className="ml-10">
+            Back to top
+          </button>
+        </div>
+      )}
       <div className="my-20 ml-28 text-2xl">
         <h2 className="text-5xl font-semibold text-white">Your Watchlist</h2>
         <div className="relative mt-8">

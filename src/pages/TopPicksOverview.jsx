@@ -7,9 +7,10 @@ import {
   faCircleCheck,
   faCircleXmark,
   faCheck,
+  faChevronUp,
 } from '@fortawesome/free-solid-svg-icons';
 import StarRating from '../StarRating';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMoviesById } from '../useMoviesById';
 import BackButton from '../ui/BackButton';
@@ -22,8 +23,49 @@ export default function TopPicksOverview() {
   const [showPopupFail, setShowPopupFail] = useState(false);
   const [showMovieDetail, setShowMovieDetail] = useState(false);
   const [showPopupDelete, setShowPopupDelete] = useState(false);
+  const [showBtnBackToTop, setShowBtnBackToTop] = useState(false);
   const [currentMovie, setCurrentMovie] = useState(null);
   const navigate = useNavigate();
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowBtnBackToTop(window.scrollY > innerHeight);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (
+      showRating ||
+      showPopupSuccess ||
+      showPopupFail ||
+      showMovieDetail ||
+      showPopupDelete
+    ) {
+      document.body.classList.add('no-scroll');
+    } else {
+      document.body.classList.remove('no-scroll');
+    }
+    return () => {
+      document.body.classList.remove('no-scroll');
+    };
+  }, [
+    showRating,
+    showPopupSuccess,
+    showPopupFail,
+    showMovieDetail,
+    showPopupDelete,
+  ]);
 
   document.title = 'Top Picks Overview';
 
@@ -138,7 +180,24 @@ export default function TopPicksOverview() {
 
   return (
     <div>
+      {(showPopupSuccess ||
+        showPopupFail ||
+        showRating ||
+        showMovieDetail ||
+        showPopupDelete) && <div className="popup-overlay"></div>}
       <BackButton />
+      {showBtnBackToTop && (
+        <div className="fixed right-[46%] top-10 z-10 w-[130px] cursor-pointer rounded-full bg-primary py-4 pl-5 pr-4 font-poppins-bold text-2xl font-medium text-black hover:bg-[#deca17]">
+          <FontAwesomeIcon
+            icon={faChevronUp}
+            className="fixed top-[37px] text-3xl"
+            onClick={scrollToTop}
+          />
+          <button onClick={scrollToTop} className="ml-10">
+            Back to top
+          </button>
+        </div>
+      )}
       <h1 className="ml-[14rem] mt-20 font-poppins-semibold text-[5rem] font-medium text-white">
         What to watch
       </h1>

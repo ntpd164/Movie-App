@@ -5,17 +5,47 @@ import {
   faCheck,
   faStar,
   faCircleXmark,
+  faChevronUp,
 } from '@fortawesome/free-solid-svg-icons';
 import BackButton from '../ui/BackButton';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Footer from '../ui/Footer';
 
 export default function WatchListOverview() {
   const watched = JSON.parse(localStorage.getItem('watched')) || [];
   console.log(watched);
   const [showPopup, setShowPopup] = useState(false);
+  const [showBtnBackToTop, setShowBtnBackToTop] = useState(false);
   const [movieToDelete, setMovieToDelete] = useState(null);
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowBtnBackToTop(window.scrollY > innerHeight);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (showPopup) {
+      document.body.classList.add('no-scroll');
+    } else {
+      document.body.classList.remove('no-scroll');
+    }
+    return () => {
+      document.body.classList.remove('no-scroll');
+    };
+  }, [showPopup]);
 
   document.title = 'Watchlist Overview';
 
@@ -29,7 +59,20 @@ export default function WatchListOverview() {
   const navigate = useNavigate();
   return (
     <div>
+      {showPopup && <div className="popup-overlay"></div>}
       <BackButton />
+      {showBtnBackToTop && (
+        <div className="fixed right-[46%] top-10 z-10 w-[130px] cursor-pointer rounded-full bg-primary py-4 pl-5 pr-4 font-poppins-bold text-2xl font-medium text-black hover:bg-[#deca17]">
+          <FontAwesomeIcon
+            icon={faChevronUp}
+            className="fixed top-[37px] text-3xl"
+            onClick={scrollToTop}
+          />
+          <button onClick={scrollToTop} className="ml-10">
+            Back to top
+          </button>
+        </div>
+      )}
       <h1 className="ml-[14rem] mt-20 font-poppins-semibold text-[5rem] font-medium text-white">
         What to watch
       </h1>
