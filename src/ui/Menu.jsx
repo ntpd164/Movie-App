@@ -1,18 +1,10 @@
 import { useState, useEffect } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
+import BackToTop from './BackToTopButton';
 
 export default function Menu({ username }) {
   const [showButton, setShowButton] = useState(false);
   const navigate = useNavigate();
-
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
-  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -58,18 +50,7 @@ export default function Menu({ username }) {
           <div className="absolute -bottom-3  hidden h-[1px] w-full bg-white group-hover:block  "></div>
         </li>
       </ul>
-      {showButton && (
-        <div className="fixed right-[46%] top-10 z-50 w-[130px] cursor-pointer rounded-full bg-primary py-4 pl-5 pr-4 font-poppins-bold text-2xl font-medium text-black hover:bg-[#deca17]">
-          <FontAwesomeIcon
-            icon={faChevronUp}
-            className="fixed top-[37px] text-3xl"
-            onClick={scrollToTop}
-          />
-          <button onClick={scrollToTop} className="ml-10">
-            Back to top
-          </button>
-        </div>
-      )}
+      {showButton && <BackToTop />}
     </div>
   );
 }

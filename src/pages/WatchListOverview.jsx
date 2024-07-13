@@ -5,12 +5,12 @@ import {
   faCheck,
   faStar,
   faCircleXmark,
-  faChevronUp,
 } from '@fortawesome/free-solid-svg-icons';
 import BackButton from '../ui/BackButton';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Footer from '../ui/Footer';
+import BackToTop from '../ui/BackToTopButton';
 
 export default function WatchListOverview() {
   const watched = JSON.parse(localStorage.getItem('watched')) || [];
@@ -18,13 +18,6 @@ export default function WatchListOverview() {
   const [showPopup, setShowPopup] = useState(false);
   const [showBtnBackToTop, setShowBtnBackToTop] = useState(false);
   const [movieToDelete, setMovieToDelete] = useState(null);
-
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
-  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -61,18 +54,7 @@ export default function WatchListOverview() {
     <div>
       {showPopup && <div className="popup-overlay"></div>}
       <BackButton />
-      {showBtnBackToTop && (
-        <div className="fixed right-[46%] top-10 z-10 w-[130px] cursor-pointer rounded-full bg-primary py-4 pl-5 pr-4 font-poppins-bold text-2xl font-medium text-black hover:bg-[#deca17]">
-          <FontAwesomeIcon
-            icon={faChevronUp}
-            className="fixed top-[37px] text-3xl"
-            onClick={scrollToTop}
-          />
-          <button onClick={scrollToTop} className="ml-10">
-            Back to top
-          </button>
-        </div>
-      )}
+      {showBtnBackToTop && <BackToTop />}
       <h1 className="ml-[14rem] mt-20 font-poppins-semibold text-[5rem] font-medium text-white">
         What to watch
       </h1>
@@ -104,6 +86,11 @@ export default function WatchListOverview() {
           <div className="absolute bottom-[0.125rem] w-full border-2 border-blue-400"></div>
         </div>
       </div>
+      {watched.length === 0 && (
+        <div className="mx-auto ml-[14rem] mt-20 font-poppins-regular text-4xl font-medium text-white">
+          No movies in your watchlist
+        </div>
+      )}
       <div className={`mx-[14rem] mt-20 grid grid-cols-6 gap-10`}>
         {watched.map((movie, index) => (
           <div key={index} className="">

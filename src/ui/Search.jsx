@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { useKey } from '../useKey';
+import { useKey } from '../hooks/useKey';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import MovieDetails from './MovieDetails';

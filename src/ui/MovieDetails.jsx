@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import Loader from './Loader';
-import StarRating from '../StarRating';
+import StarRating from './StarRating';
 // import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 

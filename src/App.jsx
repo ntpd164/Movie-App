@@ -45,10 +45,6 @@ const router = createBrowserRouter([
         path: '/user/watchlist',
         element: <WatchList />,
       },
-      // {
-      //   path: '/movie/:selectedId',
-      //   element: <SelectedMovie />,
-      // },
     ],
   },
 ]);

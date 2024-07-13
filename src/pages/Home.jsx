@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useMovies } from '../useMovies';
+import { useMovies } from '../hooks/useMovies';
 
 import NavBar from '../ui/NavBar';
 import Loader from '../ui/Loader';
@@ -13,14 +13,14 @@ import Box from '../ui/Box';
 import MovieList from '../ui/MovieList';
 // import MovieDetails from './MovieDetails';
 // import WatchedSummary from './WatchedSummary';
-import useLocalStorageState from '../useLocalStorageState';
+import useLocalStorageState from '../hooks/useLocalStorageState';
 // import WatchedMoviesList from './WatchedMoviesList';
 import Header from '../ui/Header';
 import TopPicks from '../ui/TopPicks';
 import FanFavorites from '../ui/FanFavorites';
 import PopularCelebrities from '../ui/PopularCelebrities';
 import Footer from '../ui/Footer';
-import { useMoviesById } from '../useMoviesById';
+import { useMoviesById } from '../hooks/useMoviesByID';
 // import { useNavigate } from 'react-router-dom';
 
 // const KEY = 'd8bed612';

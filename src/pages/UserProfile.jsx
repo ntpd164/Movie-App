@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { updateName } from '../features/user/userSlice';
 import { useState, useRef, useEffect } from 'react';
-import useOutsideAlerter from '../useOutsideAlerter';
+import useOutsideAlerter from '../hooks/useOutsideAlerter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 
