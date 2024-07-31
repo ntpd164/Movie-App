@@ -34,7 +34,13 @@ export default function TopPicks({
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (showPopupSuccess || showPopupFail || showRating) {
+    if (
+      showPopupSuccess ||
+      showPopupFail ||
+      showRating ||
+      showMovieDetail ||
+      showPopupDelete
+    ) {
       document.body.classList.add('no-scroll');
     } else {
       document.body.classList.remove('no-scroll');
@@ -43,7 +49,13 @@ export default function TopPicks({
     return () => {
       document.body.classList.remove('no-scroll');
     };
-  }, [showPopupSuccess, showPopupFail, showRating]);
+  }, [
+    showPopupSuccess,
+    showPopupFail,
+    showRating,
+    showMovieDetail,
+    showPopupDelete,
+  ]);
 
   const handleNext = () => {
     const newIndex = startIndex + moviesPerPage;
@@ -132,9 +144,11 @@ export default function TopPicks({
 
   return (
     <div id="top-picks" className="mx-[140px] mb-[50px] pt-[30px]">
-      {(showPopupSuccess || showPopupFail || showRating) && (
-        <div className="popup-overlay"></div>
-      )}
+      {(showPopupSuccess ||
+        showPopupFail ||
+        showRating ||
+        showMovieDetail ||
+        showPopupDelete) && <div className="popup-overlay"></div>}
       <div>
         <div>
           <div
@@ -242,7 +256,7 @@ export default function TopPicks({
           </div>
         ))}
         <button
-          className="absolute -right-24 top-[44%] z-20 cursor-pointer rounded-md border border-zinc-400 px-6 pb-3 pt-1 text-[30px]"
+          className="absolute -right-24 top-[44%] z-10 cursor-pointer rounded-md border border-zinc-400 px-6 pb-3 pt-1 text-[30px]"
           onClick={handleNext}
         >
           {'>'}

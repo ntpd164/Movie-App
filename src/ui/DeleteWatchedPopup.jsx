@@ -7,13 +7,13 @@ export default function DeleteWatchedPopup({
   movie,
 }) {
   return (
-    <div className="fixed left-1/2 top-1/4 z-30 m-4 -translate-x-1/2 transform rounded-lg bg-white p-4 shadow-lg transition-transform duration-500 ease-out">
+    <div className="fixed left-1/2 top-1/4 z-30 m-4 -translate-x-1/2 transform rounded-lg bg-background-500 p-4 shadow-lg transition-transform duration-500 ease-out">
       <FontAwesomeIcon
         icon={faCircleXmark}
         className="mx-auto mt-10 flex text-[8rem] text-red-dark"
       />
-      <div className="">
-        <p className="mt-14 flex justify-center font-poppins-regular text-4xl font-semibold text-black">
+      <div className="mx-auto max-w-xl text-center">
+        <p className=" mt-14 font-poppins-regular text-4xl font-semibold text-white">
           Do you want to delete this movie from your watchlist?
         </p>
       </div>

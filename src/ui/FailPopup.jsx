@@ -5,16 +5,16 @@ import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 export default function FailPopup({ setShowPopupFail }) {
   const navigate = useNavigate();
   return (
-    <div className="fixed left-1/2 top-1/4 z-30 m-4 -translate-x-1/2 transform rounded-lg bg-white p-4 shadow-lg transition-transform duration-500 ease-out">
+    <div className="fixed left-1/2 top-1/4 z-30 m-4 -translate-x-1/2 transform rounded-lg bg-background-500 p-4 shadow-lg transition-transform duration-500 ease-out">
       <FontAwesomeIcon
         icon={faCircleXmark}
         className="mx-auto mt-10 flex text-[8rem] text-red-dark"
       />
       <div className="">
-        <p className="mt-14 flex justify-center font-poppins-regular text-4xl font-semibold text-black">
+        <p className="mt-14 flex justify-center font-poppins-regular text-4xl font-semibold text-white">
           Movie already added to list!
         </p>
-        <p className="mt-2 flex justify-center font-poppins-medium text-3xl font-light text-[#5c5c5c]">
+        <p className="mt-2 flex justify-center font-poppins-medium text-3xl font-light text-[#9a9999]">
           Check your watchlist for more details.
         </p>
       </div>
