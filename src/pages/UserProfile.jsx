@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { updateName } from '../features/user/userSlice';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import useOutsideAlerter from '../hooks/useOutsideAlerter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
@@ -15,6 +15,8 @@ export default function UserProfile() {
   const initialState = localStorage.getItem('state') || '';
   const initialArea = localStorage.getItem('area') || '';
   const initialCountry = localStorage.getItem('country') || '';
+  const initialAvatar =
+    localStorage.getItem('avatar') || '../src/assets/img/other/defaultUser.png';
 
   const [username, setUsername] = useState(initialUsername);
   const [mobileNumber, setMobileNumber] = useState(initialMobileNumber);
@@ -24,6 +26,7 @@ export default function UserProfile() {
   const [state, setState] = useState(initialState);
   const [area, setArea] = useState(initialArea);
   const [country, setCountry] = useState(initialCountry);
+  const [avatar, setAvatar] = useState(initialAvatar);
 
   const [showPopup, setShowPopup] = useState(false);
   const dispatch = useDispatch();
@@ -32,7 +35,7 @@ export default function UserProfile() {
 
   useOutsideAlerter(profileRef, () => navigate('/'));
 
-  useEffect(() => {
+  function handleSaveProfile() {
     localStorage.setItem('loggedInUsername', username);
     localStorage.setItem('mobileNumber', mobileNumber);
     localStorage.setItem('email', email);
@@ -41,9 +44,8 @@ export default function UserProfile() {
     localStorage.setItem('state', state);
     localStorage.setItem('area', area);
     localStorage.setItem('country', country);
-  }, [username, mobileNumber, email, address, postcode, state, area, country]);
+    localStorage.setItem('avatar', avatar);
 
-  function handleSaveProfile() {
     dispatch(updateName(username));
     setShowPopup(true);
     setTimeout(() => {
@@ -52,28 +54,48 @@ export default function UserProfile() {
     }, 1000);
   }
 
+  function handleImageChange(e) {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setAvatar(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
   return (
     <div>
       <div
         ref={profileRef}
-        className="container mx-auto my-5 rounded bg-white "
+        className="min-h-screen w-full rounded bg-white md:mx-auto md:my-5 md:max-w-[768px] lg:max-w-[1024px] xl:max-w-[1280px]"
       >
-        <div className="flex flex-wrap">
+        <div className="relative flex w-full flex-wrap">
           <div className="w-full border-r md:w-1/4">
-            <div className="mt-[120px] flex flex-col items-center p-3 text-center">
+            <div className="mt-20 flex flex-col items-center p-3 text-center md:mt-[120px]">
               <img
-                className=" mt-5 h-[200px] w-[300px] "
-                src="../src/assets/img/other/defaultUser.png"
+                className="mt-5 h-32 w-32 rounded-full object-cover sm:h-40 sm:w-40 md:h-48 md:w-48 lg:h-72 lg:w-72"
+                src={avatar}
                 alt="Avatar"
               ></img>
+              <label className="mt-3 cursor-pointer font-poppins-medium text-2xl font-medium text-blue-500">
+                <input
+                  type="file"
+                  className="hidden"
+                  accept="image/*"
+                  onChange={handleImageChange}
+                />
+                Change Avatar
+              </label>
               <span className="mt-5 font-poppins-bold text-3xl text-[#525151]">
                 Hello, {username}!
               </span>
             </div>
           </div>
 
-          <div className="mx-4 w-full border-r md:w-5/12">
-            <div className="p-3 py-5">
+          <div className="w-full border-r md:mx-4 md:w-5/12">
+            <div className="p-3">
               <div className="mb-3 flex items-center justify-between">
                 <h4 className="my-8 ml-2 text-right font-poppins-semibold text-4xl text-[#333] ">
                   Profile Settings
@@ -198,7 +220,7 @@ export default function UserProfile() {
                   ></input>
                 </div>
               </div>
-              <div className="mb-3 mt-7 flex justify-center">
+              <div className="mb-6 mt-7 flex justify-center">
                 <button
                   className="btn btn-primary profile-button rounded bg-blue-500 px-4 py-2 text-2xl text-white"
                   type="button"
@@ -210,7 +232,7 @@ export default function UserProfile() {
             </div>
           </div>
 
-          <div className="ml-auto mr-6 mt-4">
+          <div className="absolute right-4 top-4">
             <button
               className="text-5xl text-red-dark"
               onClick={() => navigate('/')}
