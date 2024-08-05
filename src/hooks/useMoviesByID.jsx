@@ -4,64 +4,53 @@ const KEY = 'd8bed612';
 
 export function useMoviesById(initialMovieIds) {
   const [movies, setMovies] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [loadingStates, setLoadingStates] = useState([]);
   const [error, setError] = useState('');
-  const movieIdsRef = useRef(initialMovieIds);
   const cache = useRef({});
 
   useEffect(() => {
-    const controller = new AbortController();
-    async function fetchMoviesById() {
-      try {
-        setIsLoading(true);
-        setError('');
-        const moviesData = [];
+    const fetchMovies = async () => {
+      setLoadingStates(initialMovieIds.map(() => true));
 
-        for (const id of movieIdsRef.current) {
-          if (cache.current[id]) {
-            moviesData.push(cache.current[id]);
-          } else {
-            const res = await fetch(
-              `http://www.omdbapi.com/?apikey=${KEY}&i=${id}`,
-              { signal: controller.signal }
-            );
+      const moviesData = await Promise.all(
+        initialMovieIds.map(async (id, index) => {
+          try {
+            if (cache.current[id]) {
+              return cache.current[id];
+            } else {
+              const res = await fetch(
+                `http://www.omdbapi.com/?apikey=${KEY}&i=${id}`
+              );
 
-            if (!res.ok)
-              throw new Error('Something went wrong with fetching movie by ID');
+              if (!res.ok) throw new Error('Something went wrong');
 
-            const data = await res.json();
-            console.log('data: ', data);
-            if (data.Response === 'False') throw new Error('Movie not found');
+              const data = await res.json();
+              if (data.Response === 'False') throw new Error('Movie not found');
 
-            cache.current[id] = data;
-            moviesData.push(data);
+              cache.current[id] = data;
+              return data;
+            }
+          } catch (error) {
+            console.error(`Error fetching movie ${id}:`, error);
+            setError(error.message);
+            return null;
+          } finally {
+            setLoadingStates((prev) => {
+              const newLoadingStates = [...prev];
+              newLoadingStates[index] = false;
+              return newLoadingStates;
+            });
           }
-        }
+        })
+      );
 
-        setMovies(moviesData);
-        setError('');
-      } catch (err) {
-        if (err.name !== 'AbortError') {
-          console.log(err.message);
-          setError(err.message);
-        }
-      } finally {
-        setIsLoading(false);
-      }
-    }
-
-    if (movieIdsRef.current.length === 0) {
-      setMovies([]);
-      setError('');
-      return;
-    }
-
-    fetchMoviesById();
-
-    return () => {
-      controller.abort();
+      setMovies(moviesData.filter((movie) => movie !== null));
     };
+
+    fetchMovies();
   }, []);
+
+  const isLoading = loadingStates.some((state) => state);
 
   return { movies, isLoading, error };
 }

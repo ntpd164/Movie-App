@@ -20,8 +20,6 @@ import TopPicks from '../ui/TopPicks';
 import FanFavorites from '../ui/FanFavorites';
 import PopularCelebrities from '../ui/PopularCelebrities';
 import Footer from '../ui/Footer';
-import { useMoviesById } from '../hooks/useMoviesByID';
-// import { useNavigate } from 'react-router-dom';
 
 // const KEY = 'd8bed612';
 
@@ -200,17 +198,17 @@ export default function Home({ movieId }) {
     },
   ];
 
-  const {
-    movies: topPicksMovies,
-    isLoading: topPicksIsLoading,
-    error: topPicksError,
-  } = useMoviesById(topPicksMovieIds);
+  // const {
+  //   movies: topPicksMovies,
+  //   isLoading: topPicksIsLoading,
+  //   error: topPicksError,
+  // } = useMoviesById(topPicksMovieIds);
 
-  const {
-    movies: fanFavoritesMovies,
-    isLoading: fanFavoritesIsLoading,
-    error: fanFavoritesError,
-  } = useMoviesById(fanFavoritesMovieIds);
+  // const {
+  //   movies: fanFavoritesMovies,
+  //   isLoading: fanFavoritesIsLoading,
+  //   error: fanFavoritesError,
+  // } = useMoviesById(fanFavoritesMovieIds);
 
   useEffect(() => {
     const username = localStorage.getItem('loggedInUsername');
@@ -295,35 +293,20 @@ export default function Home({ movieId }) {
       </Header>
 
       <Main>
-        {console.log('check loading: ', topPicksIsLoading)}
-        {topPicksIsLoading && (console.log('loaddd'), (<Loader />))}
-        {!topPicksIsLoading &&
-          !topPicksError &&
-          (console.log(topPicksMovies),
-          (
-            <TopPicks
-              username={loggedInUsername}
-              topPicksMovies={topPicksMovies}
-              onAddWatched={handleAddWatched}
-              onDeleteWatched={handleDeleteWatched}
-              watched={watched}
-            />
-          ))}
-        {topPicksError && <ErrorMessage message={topPicksError} />}
-        {fanFavoritesIsLoading && <Loader />}
-        {!fanFavoritesIsLoading &&
-          !fanFavoritesError &&
-          (console.log(fanFavoritesMovies),
-          (
-            <FanFavorites
-              username={loggedInUsername}
-              fanFavoritesMovies={fanFavoritesMovies}
-              onAddWatched={handleAddWatched}
-              onDeleteWatched={handleDeleteWatched}
-              watched={watched}
-            />
-          ))}
-        {fanFavoritesError && <ErrorMessage message={fanFavoritesError} />}
+        <TopPicks
+          username={loggedInUsername}
+          topPicksMovieIds={topPicksMovieIds}
+          onAddWatched={handleAddWatched}
+          onDeleteWatched={handleDeleteWatched}
+          watched={watched}
+        />
+        <FanFavorites
+          username={loggedInUsername}
+          fanFavoritesMovieIds={fanFavoritesMovieIds}
+          onAddWatched={handleAddWatched}
+          onDeleteWatched={handleDeleteWatched}
+          watched={watched}
+        />
 
         <PopularCelebrities celebrities={celebrities} />
         {/* <Box>

@@ -16,6 +16,7 @@ import FailPopup from '../ui/FailPopup';
 import RatingPopup from '../ui/RatingPopup';
 import MovieDetailsPopup from '../ui/MovieDetailsPopup';
 import DeleteWatchedPopup from '../ui/DeleteWatchedPopup';
+import Loader from '../ui/Loader';
 
 export default function TopPicksOverview() {
   const [userRating, setUserRating] = useState('');
@@ -211,7 +212,10 @@ export default function TopPicksOverview() {
           </button>
         </div>
       </div>
-      {topPicksIsLoading && <div>Loading...</div>}
+      {topPicksIsLoading && (
+        // print error in console
+        <Loader />
+      )}
       {topPicksError && <div>Error fetching data</div>}
       {!topPicksIsLoading && !topPicksError && (
         <div className={`mx-[14rem] mt-20 grid grid-cols-6 gap-10`}>

@@ -16,6 +16,7 @@ import FailPopup from '../ui/FailPopup';
 import RatingPopup from '../ui/RatingPopup';
 import MovieDetailsPopup from '../ui/MovieDetailsPopup';
 import DeleteWatchedPopup from '../ui/DeleteWatchedPopup';
+import Loader from '../ui/Loader';
 
 export default function FanFavoritesOverview() {
   const [userRating, setUserRating] = useState('');
@@ -212,7 +213,7 @@ export default function FanFavoritesOverview() {
           </button>
         </div>
       </div>
-      {fanFavoritesIsLoading && <div>Loading...</div>}
+      {fanFavoritesIsLoading && <Loader />}
       {fanFavoritesError && <div>Error fetching data</div>}
       {!fanFavoritesIsLoading && !fanFavoritesError && (
         <div className={`mx-[14rem] mt-20 grid grid-cols-6 gap-10`}>
