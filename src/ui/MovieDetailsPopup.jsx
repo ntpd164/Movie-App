@@ -14,7 +14,7 @@ export default function MovieDetailsPopup({
   setShowMovieDetail,
 }) {
   return (
-    <div className="fixed left-1/2 top-1/4 z-30 m-4 -translate-x-1/2 transform rounded-lg bg-background-500 p-4 shadow-lg transition-transform duration-500 ease-out">
+    <div className="fixed left-1/2 top-1/4 z-[1001] m-4 -translate-x-1/2 transform rounded-lg bg-background-500 p-4 shadow-lg transition-transform duration-500 ease-out">
       <div className="relative ml-6 mt-6">
         <div className="absolute -top-6 right-0 text-red-dark">
           <button

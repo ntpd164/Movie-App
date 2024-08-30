@@ -1,25 +1,22 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
-import { useState } from 'react';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import NextArrow from './NextArrow';
+import PrevArrow from './PrevArrow';
 
 export default function PopularCelebrities({ celebrities }) {
-  const [startIndex, setStartIndex] = useState(0);
-  const moviesPerPage = 6;
-
-  const handleNext = () => {
-    const newIndex = startIndex + moviesPerPage;
-    if (newIndex < celebrities.length) {
-      setStartIndex(newIndex);
-    } else {
-      setStartIndex(0); // Reset về đầu khi hết phim
-    }
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 6,
+    slidesToScroll: 1,
+    nextArrow: <NextArrow />,
+    prevArrow: <PrevArrow />,
   };
-
-  const currentCelebrities = celebrities.slice(
-    startIndex,
-    startIndex + moviesPerPage
-  );
 
   return (
     <div id="popular-celebrities" className="mx-[140px] pt-[30px]">
@@ -38,25 +35,21 @@ export default function PopularCelebrities({ celebrities }) {
         </div>
       </div>
       <div>
-        <div className="relative mx-auto mt-20 grid grid-cols-6 gap-10">
-          {currentCelebrities.map((celebrity, index) => (
-            <div key={index} className="">
-              <img
-                src={celebrity.src}
-                alt={celebrity.name}
-                className="h-[192px] w-full rounded-full"
-              ></img>
-              <h2 className="mt-4 flex items-center justify-center text-3xl font-semibold text-white">
-                {celebrity.name}
-              </h2>
-            </div>
-          ))}
-          <button
-            className="absolute -right-24 top-[34%] z-20 cursor-pointer rounded-md border border-zinc-400 px-6 pb-3 pt-1 text-[30px]"
-            onClick={handleNext}
-          >
-            {'>'}
-          </button>
+        <div className="relative">
+          <Slider {...settings}>
+            {celebrities.map((celebrity, index) => (
+              <div key={index} className="px-4">
+                <img
+                  src={celebrity.src}
+                  alt={celebrity.name}
+                  className="h-[192px] w-full rounded-full"
+                ></img>
+                <h2 className="mt-4 flex items-center justify-center text-3xl font-semibold text-white">
+                  {celebrity.name}
+                </h2>
+              </div>
+            ))}
+          </Slider>
         </div>
       </div>
     </div>

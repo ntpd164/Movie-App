@@ -26,12 +26,12 @@ export default function Footer() {
           Sign in for more access
         </button>
       )}
-      <div className="mb-10 mt-10 flex items-center justify-center gap-x-8 font-poppins-bold font-semibold">
-        <div className="rounded-xl border border-zinc-600 px-24 py-4 text-3xl">
+      <div className="my-10 items-center justify-center gap-x-8 font-poppins-bold font-semibold md:flex">
+        <div className="rounded-xl px-24 py-4 text-3xl md:border md:border-zinc-600">
           <h2 className="flex items-center justify-center">
             Follow us on social
           </h2>
-          <div className=" my-4">
+          <div className="flex items-center justify-center">
             <a className="mr-2 cursor-pointer rounded-full px-5 py-4 hover:bg-[#333333]">
               <FontAwesomeIcon icon={faTiktok} />
             </a>
@@ -49,22 +49,22 @@ export default function Footer() {
             </a>
           </div>
         </div>
-        <div className="flex rounded-xl border border-zinc-600 px-8 py-5 text-3xl">
+        <div className=" items-center  justify-center rounded-xl px-8 py-5 text-3xl md:flex md:border md:border-zinc-600">
           <div className="mr-[100px]">
-            <h2 className="mb-1 mt-2">Get app</h2>
-            <p className="font-poppins-regular text-2xl font-thin text-[#a5a5a5]">
+            <h2 className="mb-1 ml-40 mt-2 text-center md:ml-0 ">Get app</h2>
+            <p className="mb-4 ml-40 text-center font-poppins-regular text-2xl font-thin text-[#a5a5a5] md:ml-0">
               For Android and iOS
             </p>
           </div>
           <img
             src="../src/assets/img/other/appQR.png"
             alt="QR code for app download"
-            className="h-24 w-24 rounded-md"
+            className="mx-auto h-52 w-52 rounded-md md:h-24 md:w-24"
           />
         </div>
       </div>
       <div className="text-3xl">
-        <div className="mb-8 flex items-center justify-center">
+        <div className="mb-8 hidden items-center justify-center md:flex">
           <a className="mr-20 cursor-pointer font-poppins-semibold font-medium text-white hover:underline">
             Help
           </a>
@@ -78,7 +78,7 @@ export default function Footer() {
             License IMDb Data
           </a>
         </div>
-        <div className="mb-10 flex items-center justify-center">
+        <div className="mb-10 hidden items-center justify-center md:flex">
           <a className="mr-20 cursor-pointer font-poppins-semibold font-medium text-white hover:underline">
             Press Room
           </a>

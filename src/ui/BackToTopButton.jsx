@@ -12,7 +12,7 @@ export default function BackToTop() {
   return (
     <div
       onClick={scrollToTop}
-      className="fixed right-[46%] top-10 z-10 w-[130px] cursor-pointer rounded-full bg-primary py-4 pl-5 pr-4 font-poppins-bold text-2xl font-medium text-black hover:bg-[#deca17]"
+      className="fixed left-[35%] top-10 z-10 w-[130px] cursor-pointer rounded-full bg-primary py-4 pl-5 pr-4 font-poppins-bold text-2xl font-medium text-black hover:bg-[#deca17] sm:left-[46%]"
     >
       <FontAwesomeIcon
         icon={faChevronUp}

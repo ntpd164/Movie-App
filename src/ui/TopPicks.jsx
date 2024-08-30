@@ -16,6 +16,11 @@ import MovieDetailsPopup from './MovieDetailsPopup';
 import DeleteWatchedPopup from './DeleteWatchedPopup';
 import { useMoviesById } from '../hooks/useMoviesByID';
 import Loader from './Loader';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import NextArrow from './NextArrow';
+import PrevArrow from './PrevArrow';
 
 export default function TopPicks({
   username,
@@ -24,7 +29,7 @@ export default function TopPicks({
   onDeleteWatched,
   watched = [],
 }) {
-  const [startIndex, setStartIndex] = useState(0);
+  // const [startIndex, setStartIndex] = useState(0);
   const [userRating, setUserRating] = useState('');
   const [showPopupSuccess, setShowPopupSuccess] = useState(false);
   const [showPopupFail, setShowPopupFail] = useState(false);
@@ -32,7 +37,7 @@ export default function TopPicks({
   const [showMovieDetail, setShowMovieDetail] = useState(false);
   const [showPopupDelete, setShowPopupDelete] = useState(false);
   const [currentMovie, setCurrentMovie] = useState(null);
-  const moviesPerPage = 6;
+  // const moviesPerPage = 6;
   const navigate = useNavigate();
 
   const {
@@ -65,19 +70,19 @@ export default function TopPicks({
     showPopupDelete,
   ]);
 
-  const handleNext = () => {
-    const newIndex = startIndex + moviesPerPage;
-    if (newIndex < topPicksMovies.length) {
-      setStartIndex(newIndex);
-    } else {
-      setStartIndex(0);
-    }
-  };
+  // const handleNext = () => {
+  //   const newIndex = startIndex + moviesPerPage;
+  //   if (newIndex < topPicksMovies.length) {
+  //     setStartIndex(newIndex);
+  //   } else {
+  //     setStartIndex(0);
+  //   }
+  // };
 
-  const currentMovies = topPicksMovies.slice(
-    startIndex,
-    startIndex + moviesPerPage
-  );
+  // const currentMovies = topPicksMovies.slice(
+  //   startIndex,
+  //   startIndex + moviesPerPage
+  // );
 
   const isWatched = (movie) =>
     watched.map((m) => m.imdbID).includes(movie.imdbID);
@@ -125,6 +130,16 @@ export default function TopPicks({
     setShowPopupSuccess(true);
     console.log('Add movie: ', newWatchedMovie);
   }
+
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 6,
+    slidesToScroll: 1,
+    nextArrow: <NextArrow />,
+    prevArrow: <PrevArrow />,
+  };
 
   function handleRating(movie) {
     console.log('movie: ', movie);
@@ -190,89 +205,116 @@ export default function TopPicks({
       {topPicksIsLoading && <Loader />}
       {topPicksError && <div>Error loading movies</div>}
       {!topPicksIsLoading && !topPicksError && (
-        <div className={`relative mx-auto mt-5 grid grid-cols-6 gap-10`}>
-          {currentMovies.map((movie, index) => (
-            <div key={index} className="">
-              <img
-                src={movie.Poster}
-                alt={movie.Title}
-                className="h-[300px] w-full"
-              />
-              <div className="bg-[#1a1a1a] text-3xl">
-                <div className="flex items-center pl-8 pt-6">
-                  <span className="mr-1">⭐️</span>
-                  <span>{movie.imdbRating}</span>
-                  <button
-                    className={`ml-auto mr-14 cursor-default ${
-                      isWatched(movie) ? 'text-blue-500' : 'text-[#f8f5f5]'
-                    }`}
-                  >
-                    <FontAwesomeIcon icon={faStar} />
-                  </button>
-                </div>
-                <p className="overflow-hidden truncate text-ellipsis whitespace-nowrap pl-8 pt-4 font-poppins-semibold font-medium text-white">
-                  {movie.Title}
-                </p>
-                <div
-                  onClick={() => handleAdd(movie)}
-                  className="mx-8 mt-6 flex cursor-pointer items-center justify-center space-x-3 bg-[#2c2c2c] py-2 font-poppins-semibold font-semibold text-[#6588f4] hover:bg-[#414141]"
-                >
-                  <button>
-                    <FontAwesomeIcon icon={faPlus} />
-                  </button>
-                  <span>Watchlist</span>
-                </div>
-                <div className="mx-8 flex py-8">
-                  <div className="mb-4 mt-5 cursor-pointer rounded-md text-2xl hover:bg-[#333333]">
-                    <button className="my-3 ml-5 mr-4">
-                      <FontAwesomeIcon icon={faPlay} />
+        <div className="relative">
+          <Slider {...settings}>
+            {topPicksMovies.map((movie, index) => (
+              <div key={index} className="px-4">
+                <img
+                  src={movie.Poster}
+                  alt={movie.Title}
+                  className="h-[300px] w-full"
+                />
+                <div className="bg-[#1a1a1a] text-3xl">
+                  <div className="flex items-center pl-8 pt-6">
+                    <span className="mr-1">⭐️</span>
+                    <span>{movie.imdbRating}</span>
+                    <button
+                      className={`ml-auto mr-14 cursor-default ${
+                        isWatched(movie) ? 'text-blue-500' : 'text-[#f8f5f5]'
+                      }`}
+                    >
+                      <FontAwesomeIcon icon={faStar} />
                     </button>
-                    <span className="mr-5 font-poppins-regular font-semibold">
-                      Trailer
-                    </span>
                   </div>
-                  <button
-                    onClick={() => handleShowMovieDetail(movie)}
-                    className="my-1 ml-auto rounded-full px-6 text-4xl hover:bg-[#333333]"
+                  <p className="overflow-hidden truncate text-ellipsis whitespace-nowrap pl-8 pt-4 font-poppins-semibold font-medium text-white">
+                    {movie.Title}
+                  </p>
+                  <div
+                    onClick={() => handleAdd(movie)}
+                    className="mx-8 mt-6 flex cursor-pointer items-center justify-center space-x-3 bg-[#2c2c2c] py-2 font-poppins-semibold font-semibold text-[#6588f4] hover:bg-[#414141]"
                   >
-                    <FontAwesomeIcon icon={faCircleInfo} />
-                  </button>
+                    <button>
+                      <FontAwesomeIcon icon={faPlus} />
+                    </button>
+                    <span>Watchlist</span>
+                  </div>
+                  <div className="mx-8 flex py-8">
+                    <div className="mb-4 mt-5 cursor-pointer rounded-md text-2xl hover:bg-[#333333]">
+                      <button className="my-3 ml-5 mr-4">
+                        <FontAwesomeIcon icon={faPlay} />
+                      </button>
+                      <span className="mr-5 font-poppins-regular font-semibold">
+                        Trailer
+                      </span>
+                    </div>
+                    <button
+                      onClick={() => handleShowMovieDetail(movie)}
+                      className="my-1 ml-auto rounded-full px-6 text-4xl hover:bg-[#333333]"
+                    >
+                      <FontAwesomeIcon icon={faCircleInfo} />
+                    </button>
+                  </div>
                 </div>
+                {/* {showRating && currentMovie === movie && (
+                  <RatingPopup
+                    setShowRating={setShowRating}
+                    movie={movie}
+                    setUserRating={setUserRating}
+                    userRating={userRating}
+                    handleRating={handleRating}
+                  />
+                )}
+                {showMovieDetail && currentMovie === movie && (
+                  <MovieDetailsPopup
+                    movie={movie}
+                    isWatched={isWatched}
+                    handleAdd={handleAdd}
+                    handleDeleteWatched={handleDeleteWatched}
+                    setShowMovieDetail={setShowMovieDetail}
+                  />
+                )}
+                {showPopupDelete && currentMovie === movie && (
+                  <DeleteWatchedPopup
+                    setShowPopupDelete={setShowPopupDelete}
+                    confirmDeleteWatched={confirmDeleteWatched}
+                    movie={movie}
+                  />
+                )} */}
               </div>
-              {showRating && currentMovie === movie && (
-                <RatingPopup
-                  setShowRating={setShowRating}
-                  movie={movie}
-                  setUserRating={setUserRating}
-                  userRating={userRating}
-                  handleRating={handleRating}
-                />
-              )}
-              {showMovieDetail && currentMovie === movie && (
-                <MovieDetailsPopup
-                  movie={movie}
-                  isWatched={isWatched}
-                  handleAdd={handleAdd}
-                  handleDeleteWatched={handleDeleteWatched}
-                  setShowMovieDetail={setShowMovieDetail}
-                />
-              )}
-              {showPopupDelete && currentMovie === movie && (
-                <DeleteWatchedPopup
-                  setShowPopupDelete={setShowPopupDelete}
-                  confirmDeleteWatched={confirmDeleteWatched}
-                  movie={movie}
-                />
-              )}
-            </div>
-          ))}
-          <button
+            ))}
+          </Slider>
+          {/* <button
             className="absolute -right-24 top-[44%] z-10 cursor-pointer rounded-md border border-zinc-400 px-6 pb-3 pt-1 text-[30px]"
             onClick={handleNext}
           >
             {'>'}
-          </button>
+          </button> */}
         </div>
+      )}
+      {showRating && (
+        <RatingPopup
+          setShowRating={setShowRating}
+          movie={currentMovie}
+          setUserRating={setUserRating}
+          userRating={userRating}
+          handleRating={handleRating}
+        />
+      )}
+      {showMovieDetail && (
+        <MovieDetailsPopup
+          movie={currentMovie}
+          isWatched={isWatched}
+          handleAdd={handleAdd}
+          handleDeleteWatched={handleDeleteWatched}
+          setShowMovieDetail={setShowMovieDetail}
+        />
+      )}
+      {showPopupDelete && (
+        <DeleteWatchedPopup
+          setShowPopupDelete={setShowPopupDelete}
+          confirmDeleteWatched={confirmDeleteWatched}
+          movie={currentMovie}
+        />
       )}
       {showPopupSuccess && (
         <SuccessPopup setShowPopupSuccess={setShowPopupSuccess} />

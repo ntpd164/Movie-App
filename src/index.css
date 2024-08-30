@@ -315,6 +315,10 @@ li:hover .border-menu {
   transform: scaleX(1);
 }
 
+.slick-slide {
+  z-index: 1;
+}
+
 /*
 SPACING SYSTEM (px)
 2 / 4 / 8 / 12 / 16 / 24 / 32 / 40 / 48 / 64 / 80 / 96 / 128

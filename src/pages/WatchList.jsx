@@ -111,7 +111,7 @@ export default function WatchList() {
     <div>
       <BackButton />
       {showBtnBackToTop && <BackToTop />}
-      <div className="my-20 ml-28 text-2xl">
+      <div className="my-20 ml-10 text-2xl md:ml-28">
         <h2 className="text-5xl font-semibold text-white">Your Watchlist</h2>
         <div className="relative mt-8">
           <span className=" mr-2  font-medium">by</span>
@@ -126,17 +126,17 @@ export default function WatchList() {
           arrange your titles in the order you want to see them.
         </p>
       </div>
-      <div className=" bg-white pb-20 pl-28 pt-28">
-        <div className="mb-10 flex font-poppins-semibold text-3xl font-normal text-black">
-          <div className="mt-3">
+      <div className=" bg-white pb-20 pl-10 pt-28 md:pl-28">
+        <div className="mb-10 font-poppins-semibold text-3xl font-normal text-black md:flex">
+          <div className="mb-10 mt-3 md:mb-0">
             <span>{watched.length}</span>
             {watched.length > 1 ? ' movies' : ' movie'}
           </div>
-          <div className="ml-[45rem] flex">
-            <span className="mt-3">Sort by</span>
+          <div className="flex md:ml-[20rem] lg:ml-[37rem] xl:ml-[60rem]">
+            <span className="mt-3 hidden sm:block">Sort by</span>
             <div
               onClick={handleShowOrderMenu}
-              className="relative ml-8 cursor-pointer px-4 py-3 text-[#0472d2] hover:bg-[#ededed]"
+              className="relative cursor-pointer px-4 py-3 text-[#0472d2] hover:bg-[#ededed] sm:ml-8"
             >
               <button className="">{order}</button>
               <FontAwesomeIcon icon={faChevronCircleDown} className="ml-3" />
@@ -273,7 +273,7 @@ export default function WatchList() {
             </div>
             <div
               onClick={() => handleModeChange('grid')}
-              className="relative ml-[7rem] "
+              className="relative ml-[7rem]"
             >
               <div className="absolute -left-4 -top-6 cursor-pointer rounded-full py-10 pb-14 pl-20 pr-4  hover:bg-[#ededed]">
                 <div className="absolute left-8 top-4 flex">
@@ -332,7 +332,7 @@ export default function WatchList() {
           </div>
         </div>
         {modeDisplay === 'details' && (
-          <div className="w-2/3 rounded-md border border-zinc-400 pb-10 pt-14">
+          <div className="w-11/12 rounded-md border border-zinc-400 pb-10 pt-14 md:w-11/12 lg:w-3/4">
             {watched.map((movie, index) => (
               <div key={movie.imdbID} className="mb-10 ml-10">
                 <div className="flex">
@@ -366,10 +366,10 @@ export default function WatchList() {
                     </div>
                   </div>
                 </div>
-                <p className="mt-4 font-poppins-medium text-2xl font-thin text-black">
+                <p className="mr-4 mt-4 font-poppins-medium text-2xl font-thin text-black">
                   {movie.plot}
                 </p>
-                <div className="mt-4 flex font-poppins-medium text-2xl font-thin text-black">
+                <div className="mt-4 font-poppins-medium text-2xl font-thin text-black md:flex">
                   <span className=" font-poppins-regular font-bold">
                     Director
                   </span>
@@ -396,14 +396,14 @@ export default function WatchList() {
           </div>
         )}
         {modeDisplay === 'grid' && (
-          <div className="grid w-2/3 grid-cols-4 gap-10">
+          <div className="grid w-4/5 gap-10 md:w-11/12 md:max-w-[770px] md:grid-cols-2 lg:w-11/12 lg:max-w-[980px] lg:grid-cols-3 xl:w-11/12 xl:max-w-[1200px] xl:grid-cols-4">
             {watched.map((movie, index) => (
               <div
                 key={movie.imdbID}
                 className="flex flex-col items-center rounded-md border border-zinc-400 shadow-lg"
               >
                 <img
-                  className="mb-4  h-[30rem] w-full"
+                  className="mb-4  w-full md:h-[40rem]"
                   src={movie.poster}
                   alt={movie.title}
                 />

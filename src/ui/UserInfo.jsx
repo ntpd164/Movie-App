@@ -7,6 +7,9 @@ function UserInfo({ username, onLogout }) {
   const [showMenu, setShowMenu] = useState(false);
   const navigate = useNavigate();
 
+  const avt =
+    localStorage.getItem('avatar') || './src/assets/img/other/defaultUser.png';
+
   const handleMouseEnter = () => {
     if (username !== '') setShowMenu(true);
   };
@@ -40,13 +43,13 @@ function UserInfo({ username, onLogout }) {
   return (
     <div className="z-10 ml-[100px] flex">
       <div
-        className="relative"
+        className="relative cursor-pointer rounded-full border-[3px] border-primary"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
         <img
-          className="{username === '' ? 'cursor-pointer' : ''} w-24"
-          src="./src/assets/img/other/defaultUser.png"
+          className="{username === '' ? 'cursor-pointer' : ''} h-[45px] w-[45px] rounded-full"
+          src={avt}
           alt="Avatar"
         ></img>
         {showMenu && (
@@ -84,7 +87,7 @@ function UserInfo({ username, onLogout }) {
           </div>
         )}
       </div>
-      <p className="mt-3 text-3xl">
+      <p className="ml-6 mt-4 text-3xl">
         {username === '' ? (
           <button
             href="#"

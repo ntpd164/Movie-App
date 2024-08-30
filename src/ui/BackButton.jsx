@@ -8,7 +8,7 @@ export default function BackButton() {
   return (
     <div
       onClick={() => navigate('/')}
-      className="ml-20 mt-20 w-[8%] cursor-pointer rounded-lg bg-primary px-6 py-4 font-poppins-semibold text-4xl font-semibold text-black hover:bg-[#deca17]"
+      className="ml-10 mt-20 w-48 cursor-pointer rounded-lg bg-primary px-6 py-4 font-poppins-semibold text-4xl font-semibold text-black hover:bg-[#deca17] md:ml-20"
     >
       <button>
         <FontAwesomeIcon icon={faArrowLeft} className="" />
