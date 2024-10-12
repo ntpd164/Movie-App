@@ -1,0 +1,48 @@
+{
+  "name": "blog",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "nodemon src/index.js",
+    "watch": "sass --watch src/resources/scss/app.scss src/public/css/app.css",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ntpd164/nodejs_blog.git"
+  },
+  "keywords": [
+    "blog",
+    "nodejs",
+    "blog"
+  ],
+  "author": "duongngo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ntpd164/nodejs_blog/issues"
+  },
+  "homepage": "https://github.com/ntpd164/nodejs_blog#readme",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "express-handlebars": "^8.0.1",
+    "js": "^0.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "method-override": "^3.0.0",
+    "mongoose": "^8.6.2",
+    "mongoose-slug-updater": "^3.3.0",
+    "mongoose-validator": "^2.1.0"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.20",
+    "morgan": "^1.10.0",
+    "nodemon": "^3.1.4",
+    "postcss": "^8.4.45",
+    "sass": "^1.78.0",
+    "tailwindcss": "^3.4.11"
+  }
+}

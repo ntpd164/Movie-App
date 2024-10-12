@@ -1,0 +1,8 @@
+@import "variables";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+h1 {
+  color: $primary-color;
+}
