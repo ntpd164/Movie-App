@@ -16,7 +16,7 @@ db.connect();
 
 app.use(
   cors({
-    origin: 'https://movie-app-nine-neon.vercel.app/',
+    origin: 'https://movie-app-nine-neon.vercel.app',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
   })
