@@ -1,6 +1,6 @@
 function Logo() {
   return (
-    <div className="z-10 ml-[100px] mr-28 flex cursor-pointer items-center gap-3 ">
+    <div className="z-10 ml-[20px] mr-4 flex cursor-pointer items-center gap-3 md:ml-[50px] md:mr-14 lg:ml-[100px] xl:mr-20 ">
       {/* <span className="text-6xl" role="img">
         🍿
       </span> */}

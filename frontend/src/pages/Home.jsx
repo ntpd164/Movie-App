@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useMovies } from '../hooks/useMovies';
-
+import { jwtDecode } from 'jwt-decode';
 import NavBar from '../ui/NavBar';
 import Loader from '../ui/Loader';
 import Search from '../ui/Search';
@@ -13,13 +13,15 @@ import Box from '../ui/Box';
 import MovieList from '../ui/MovieList';
 // import MovieDetails from './MovieDetails';
 // import WatchedSummary from './WatchedSummary';
-import useLocalStorageState from '../hooks/useLocalStorageState';
+// import useLocalStorageState from '../hooks/useLocalStorageState';
 // import WatchedMoviesList from './WatchedMoviesList';
 import Header from '../ui/Header';
 import TopPicks from '../ui/TopPicks';
 import FanFavorites from '../ui/FanFavorites';
 import PopularCelebrities from '../ui/PopularCelebrities';
 import Footer from '../ui/Footer';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // const KEY = 'd8bed612';
 
@@ -28,9 +30,12 @@ export default function Home({ movieId }) {
   const [selectedId, setSelectedId] = useState(movieId ? movieId : null);
   const { movies, isLoading, error } = useMovies(query);
 
-  const [watched, setWatched] = useLocalStorageState([], 'watched');
+  // const [watched, setWatched] = useLocalStorageState([], 'watched');
+  const [watched, setWatched] = useState([]);
 
-  const [loggedInUsername, setLoggedInUsername] = useState('');
+  const [username, setUsername] = useState('');
+
+  // const [loggedInUsername, setLoggedInUsername] = useState('');
 
   // const navigate = useNavigate();
 
@@ -211,11 +216,53 @@ export default function Home({ movieId }) {
   // } = useMoviesById(fanFavoritesMovieIds);
 
   useEffect(() => {
-    const username = localStorage.getItem('loggedInUsername');
-    if (username) {
-      setLoggedInUsername(username);
+    const token = localStorage.getItem('token');
+    if (token) {
+      const decoded = jwtDecode(token);
+      console.log('decoded: ', decoded);
+      // setLoggedInUsername(decoded.name);
+      // console.log('loggedInUsername: ', loggedInUsername);
+      setUsername(decoded.name);
+      localStorage.setItem('loggedInUsername', decoded.name);
     }
-  }, []); // Load username từ localStorage khi component được mount lần đầu
+  }, []);
+
+  // useEffect(() => {
+  //   const username = localStorage.getItem('loggedInUsername');
+  //   if (username) {
+  //     setLoggedInUsername(username);
+  //   }
+  // }, []);
+
+  const token = localStorage.getItem('token');
+
+  useEffect(() => {
+    const fetchWatchlist = async () => {
+      try {
+        const res = await fetch('http://localhost:3000/watchlist/get', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        });
+        const data = await res.json();
+        setWatched(data.data.watchlist);
+      } catch (err) {
+        console.error('Error:', err);
+      }
+    };
+    fetchWatchlist();
+  }, [token]);
+
+  useEffect(() => {
+    console.log('loginSuccess: ', localStorage.getItem('loginSuccess'));
+    if (localStorage.getItem('loginSuccess') === 'true') {
+      toast.success('Login successful', {
+        className: 'large-font-toast',
+      });
+      localStorage.removeItem('loginSuccess');
+    }
+  }, []);
 
   function handleSelectMovie(id) {
     setSelectedId((selectedId) => (id === selectedId ? null : id));
@@ -238,16 +285,41 @@ export default function Home({ movieId }) {
   //Hanle logout
   function handleLogout() {
     localStorage.clear();
-    setLoggedInUsername('');
+    setUsername('');
     setWatched([]);
   }
 
   return (
     <>
+      <ToastContainer />
+      <div className="z-10 flex w-full items-center justify-between pt-10 lg:hidden">
+        <Logo />
+        <Menu username={username} />
+        <Search
+          query={query}
+          setQuery={setQuery}
+          selectedId={selectedId}
+          setSelectedId={setSelectedId}
+          onCloseMovie={handleCloseMovie}
+          onAddWatched={handleAddWatched}
+          watched={watched}
+          username={username}
+          movies={movies}
+        >
+          <Box>
+            {isLoading && <Loader />}
+            {!isLoading && !error && (
+              <MovieList movies={movies} onSelectMovie={handleSelectMovie} />
+            )}
+            {error && <ErrorMessage message={error} />}
+          </Box>
+        </Search>
+        <UserInfo username={username} onLogout={handleLogout} />
+      </div>
       <Header images={images}>
         <NavBar>
           <Logo />
-          <Menu username={loggedInUsername} />
+          <Menu username={username} />
           <Search
             query={query}
             setQuery={setQuery}
@@ -256,7 +328,7 @@ export default function Home({ movieId }) {
             onCloseMovie={handleCloseMovie}
             onAddWatched={handleAddWatched}
             watched={watched}
-            username={loggedInUsername}
+            username={username}
             movies={movies}
           >
             <Box>
@@ -266,27 +338,8 @@ export default function Home({ movieId }) {
               )}
               {error && <ErrorMessage message={error} />}
             </Box>
-            {/* <Box>
-              {selectedId ? (
-                <MovieDetails
-                  selectedId={selectedId}
-                  onCloseMovie={handleCloseMovie}
-                  onAddWatched={handleAddWatched}
-                  watched={watched}
-                  username={loggedInUsername}
-                />
-              ) : (
-                <>
-                  <WatchedSummary watched={watched} />
-                  <WatchedMoviesList
-                    watched={watched}
-                    onDeleteWatched={handleDeleteWatched}
-                  />
-                </>
-              )}
-            </Box> */}
           </Search>
-          <UserInfo username={loggedInUsername} onLogout={handleLogout} />
+          <UserInfo username={username} onLogout={handleLogout} />
         </NavBar>
 
         {/* <Slider images={images} /> */}
@@ -294,14 +347,14 @@ export default function Home({ movieId }) {
 
       <Main>
         <TopPicks
-          username={loggedInUsername}
+          username={username}
           topPicksMovieIds={topPicksMovieIds}
           onAddWatched={handleAddWatched}
           onDeleteWatched={handleDeleteWatched}
           watched={watched}
         />
         <FanFavorites
-          username={loggedInUsername}
+          username={username}
           fanFavoritesMovieIds={fanFavoritesMovieIds}
           onAddWatched={handleAddWatched}
           onDeleteWatched={handleDeleteWatched}
@@ -323,7 +376,7 @@ export default function Home({ movieId }) {
               onCloseMovie={handleCloseMovie}
               onAddWatched={handleAddWatched}
               watched={watched}
-              username={loggedInUsername}
+              username={username}
             />
           ) : (
             <>

@@ -13,11 +13,32 @@ import Footer from '../ui/Footer';
 import BackToTop from '../ui/BackToTopButton';
 
 export default function WatchListOverview() {
-  const watched = JSON.parse(localStorage.getItem('watched')) || [];
-  console.log(watched);
+  // const watched = JSON.parse(localStorage.getItem('watched')) || [];
+  // console.log(watched);
   const [showPopup, setShowPopup] = useState(false);
   const [showBtnBackToTop, setShowBtnBackToTop] = useState(false);
   const [movieToDelete, setMovieToDelete] = useState(null);
+
+  const [watchlist, setWatchlist] = useState([]);
+  const token = localStorage.getItem('token');
+
+  useEffect(() => {
+    const fetchWatchlist = async () => {
+      try {
+        const res = await fetch('http://localhost:3000/watchlist/get', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        });
+        const data = await res.json();
+        setWatchlist(data.data.watchlist);
+      } catch (err) {
+        console.error('Error:', err);
+      }
+    };
+    fetchWatchlist();
+  }, [token]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -42,11 +63,36 @@ export default function WatchListOverview() {
 
   document.title = 'Watchlist Overview';
 
-  function handleDeleteWatched(id) {
-    const newWatched = watched.filter((movie) => movie.imdbID !== id);
-    console.log(newWatched);
-    localStorage.setItem('watched', JSON.stringify(newWatched));
-    setShowPopup(false);
+  // function handleDeleteWatched(id) {
+  //   const newWatched = watched.filter((movie) => movie.imdbID !== id);
+  //   console.log(newWatched);
+  //   localStorage.setItem('watched', JSON.stringify(newWatched));
+  //   setShowPopup(false);
+  // }
+
+  async function handleDeleteWatchlist(id) {
+    try {
+      const response = await fetch(`http://localhost:3000/watchlist/remove`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ imdbID: id }),
+      });
+
+      if (response.ok) {
+        // Xóa thành công, cập nhật lại watchlist
+        setWatchlist((prevWatchlist) =>
+          prevWatchlist.filter((movie) => movie.imdbID !== id)
+        );
+        setShowPopup(false);
+      } else {
+        console.error('Failed to delete movie:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
   }
 
   const navigate = useNavigate();
@@ -86,13 +132,13 @@ export default function WatchListOverview() {
           <div className="absolute bottom-[0.125rem] w-full border-2 border-blue-400"></div>
         </div>
       </div>
-      {watched.length === 0 && (
+      {watchlist.length === 0 && (
         <div className="mx-auto ml-[14rem] mt-20 font-poppins-regular text-4xl font-medium text-white">
           No movies in your watchlist
         </div>
       )}
       <div className={`mx-[14rem] mt-20 grid grid-cols-6 gap-10`}>
-        {watched.map((movie, index) => (
+        {watchlist.map((movie, index) => (
           <div key={index} className="">
             <img
               src={movie.poster}
@@ -156,7 +202,7 @@ export default function WatchListOverview() {
                     No
                   </button>
                   <button
-                    onClick={() => handleDeleteWatched(movie.imdbID)}
+                    onClick={() => handleDeleteWatchlist(movie.imdbID)}
                     className="ml-20 block w-[20rem] rounded-md bg-green-500 px-8 py-3 font-poppins-semibold text-3xl text-white hover:bg-green-600"
                   >
                     Yes

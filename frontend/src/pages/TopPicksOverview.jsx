@@ -1,3 +1,4 @@
+// import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faCircleInfo,
@@ -5,7 +6,7 @@ import {
   faPlus,
   faStar,
 } from '@fortawesome/free-solid-svg-icons';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMoviesById } from '../hooks/useMoviesByID';
 import BackButton from '../ui/BackButton';
@@ -18,7 +19,7 @@ import MovieDetailsPopup from '../ui/MovieDetailsPopup';
 import DeleteWatchedPopup from '../ui/DeleteWatchedPopup';
 import Loader from '../ui/Loader';
 
-export default function FanFavoritesOverview() {
+export default function TopPicksOverview() {
   const [userRating, setUserRating] = useState('');
   const [showRating, setShowRating] = useState(false);
   const [showPopupSuccess, setShowPopupSuccess] = useState(false);
@@ -62,44 +63,45 @@ export default function FanFavoritesOverview() {
     showPopupDelete,
   ]);
 
-  document.title = 'Fan Favorites Overview';
+  document.title = 'Top Picks Overview';
 
-  const fanFavoritesIds = [
-    'tt22022452',
-    'tt12037194',
-    'tt12735488',
-    'tt15239678',
-    'tt1190634',
-    'tt1684562',
-    'tt23289160',
-    'tt11198330',
-    'tt19231492',
-    'tt12637874',
-    'tt17279496',
-    'tt2096673',
-    'tt0903747',
+  const topPicksMovieIds = [
+    'tt0468569',
+    'tt0167260',
+    'tt0111161',
+    'tt0108052',
+    'tt0114369',
+    'tt0816692',
+    'tt1375666',
+    'tt1745960',
+    'tt0060196',
+    'tt0120737',
+    'tt0073486',
+    'tt0372784',
+    'tt2582802',
+    'tt0120815',
     'tt0944947',
-    'tt22408160',
-    'tt14452776',
-    'tt0086960',
-    'tt21454134',
-    'tt16426418',
-    'tt1392190',
-    'tt14230458',
-    'tt0378194',
-    'tt1160419',
-    'tt3581920',
+    'tt0903747',
+    'tt0068646',
+    'tt0172495',
+    'tt0407887',
+    'tt4154756',
+    'tt7286456',
+    'tt2788316',
+    'tt0773262',
+    'tt0086250',
   ];
 
   const {
-    movies: fanFavoritesMovies,
-    isLoading: fanFavoritesIsLoading,
-    error: fanFavoritesError,
-  } = useMoviesById(fanFavoritesIds);
+    movies: topPicksMovies,
+    isLoading: topPicksIsLoading,
+    error: topPicksError,
+  } = useMoviesById(topPicksMovieIds);
 
   const watched = JSON.parse(localStorage.getItem('watched')) || [];
   console.log('watched: ', watched);
   const username = localStorage.getItem('loggedInUsername');
+  console.log('username: ', username);
 
   const isWatched = (movie) =>
     watched.map((m) => m.imdbID).includes(movie.imdbID);
@@ -109,7 +111,7 @@ export default function FanFavoritesOverview() {
     localStorage.setItem('watched', JSON.stringify(newWatched));
   }
 
-  function handleAdd(movie) {
+  async function handleAdd(movie) {
     if (!username) {
       navigate('/login');
       return;
@@ -133,20 +135,46 @@ export default function FanFavoritesOverview() {
     const newWatchedMovie = {
       imdbID: movie.imdbID,
       title: movie.Title,
-      year: movie.Year,
+      year: String(movie.Year),
       poster: movie.Poster,
       director: movie.Director,
-      actors: movie.Actors.split(', '),
+      actors: movie.Actors,
       plot: movie.Plot,
-      imdbRating: Number(movie.imdbRating),
+      imdbRating: String(movie.imdbRating),
       imdbVotes: movie.imdbVotes,
-      runtime: Number(movie.Runtime.split(' ')[0]),
-      userRating,
+      runtime: String(movie.Runtime.split(' ')[0]),
+      userRating: String(userRating),
     };
 
     handleAddWatched(newWatchedMovie);
     setShowPopupSuccess(true);
     console.log('Add movie: ', newWatchedMovie);
+
+    const token = localStorage.getItem('token');
+    try {
+      const response = await fetch('http://localhost:3000/watchlist/add', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(newWatchedMovie),
+      });
+
+      console.log('response: ', response);
+
+      if (response.ok) {
+        handleAddWatched(newWatchedMovie);
+        setShowPopupSuccess(true);
+        console.log('Add movie to database: ', newWatchedMovie);
+      } else {
+        setShowPopupFail(true);
+        console.error('Error adding movie:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error adding movie:', error);
+      setShowPopupFail(true);
+    }
   }
 
   function handleRating() {
@@ -182,47 +210,49 @@ export default function FanFavoritesOverview() {
         showPopupDelete) && <div className="popup-overlay"></div>}
       <BackButton />
       {showBtnBackToTop && <BackToTop />}
-      <h1 className="ml-[14rem] mt-20 font-poppins-semibold text-[5rem] font-medium text-white">
+      <h1 className="ml-[6rem] mt-20 font-poppins-semibold text-[5rem] font-medium text-white sm:ml-[8rem] md:ml-[14rem]">
         What to watch
       </h1>
-      <div className="ml-[12rem] mt-20 flex">
-        <div>
-          <button
-            onClick={() => navigate('/top-picks')}
-            className="px-10 py-6 font-poppins-semibold text-3xl font-semibold uppercase text-white hover:bg-background-500"
-          >
-            top picks
-          </button>
-        </div>
+      <div className="ml-[6rem] mt-20 flex overflow-auto whitespace-nowrap font-poppins-semibold text-3xl font-semibold text-white sm:ml-[8rem] md:ml-[14rem]">
         <div
-          onClick={() => navigate('/fan-favorites')}
+          onClick={() => navigate('/top-picks')}
           className="relative cursor-pointer"
         >
-          <div className="px-10 py-6 font-poppins-semibold text-3xl font-semibold uppercase text-white hover:bg-background-500">
-            fan favorites
+          <div className="px-10 py-6 uppercase hover:bg-background-500">
+            top picks
           </div>
           <div className="absolute bottom-[0.125rem] w-full border-2 border-blue-400"></div>
         </div>
-
+        <div>
+          <button
+            onClick={() => navigate('/fan-favorites')}
+            className="px-10 py-6 uppercase  hover:bg-background-500"
+          >
+            fan favorites
+          </button>
+        </div>
         <div>
           <button
             onClick={() => navigate('/watchlist')}
-            className="px-10 py-6 font-poppins-semibold text-3xl font-semibold uppercase text-white hover:bg-background-500"
+            className="px-10 py-6 uppercase hover:bg-background-500"
           >
             from your watchlist
           </button>
         </div>
       </div>
-      {fanFavoritesIsLoading && <Loader />}
-      {fanFavoritesError && <div>Error fetching data</div>}
-      {!fanFavoritesIsLoading && !fanFavoritesError && (
-        <div className={`mx-[14rem] mt-20 grid grid-cols-6 gap-10`}>
-          {fanFavoritesMovies.map((movie, index) => (
+      {topPicksIsLoading && (
+        // print error in console
+        <Loader />
+      )}
+      {topPicksError && <div>Error fetching data</div>}
+      {!topPicksIsLoading && !topPicksError && (
+        <div className="mx-[6rem] mt-20 grid max-w-[400px] grid-cols-1 gap-10 sm:mx-[8rem] sm:max-w-full sm:grid-cols-2 md:mx-[14rem] md:grid-cols-3 lg:grid-cols-4 xl:mx-[14rem] xl:grid-cols-5">
+          {topPicksMovies.map((movie, index) => (
             <div key={index} className="">
               <img
                 src={movie.Poster}
                 alt={movie.Title}
-                className="h-[300px] w-full"
+                className="h-[300px] w-full "
               />
               <div className="bg-[#1a1a1a] text-3xl">
                 <div className="flex items-center pl-8 pt-6">
@@ -241,19 +271,19 @@ export default function FanFavoritesOverview() {
                 </p>
                 <div
                   onClick={() => handleAdd(movie)}
-                  className="mx-8 mt-6 flex cursor-pointer items-center justify-center space-x-3 bg-[#2c2c2c] py-2 font-poppins-semibold font-semibold text-[#6588f4] hover:bg-[#414141]"
+                  className="mx-6 mt-6 flex cursor-pointer items-center justify-center space-x-3 bg-[#2c2c2c] py-2 font-poppins-semibold font-semibold text-[#6588f4] hover:bg-[#414141] md:space-x-1 xl:space-x-3"
                 >
                   <button>
                     <FontAwesomeIcon icon={faPlus} />
                   </button>
                   <span>Watchlist</span>
                 </div>
-                <div className="mx-8 flex py-8">
-                  <div className="mb-4 mt-5 cursor-pointer rounded-md text-2xl hover:bg-[#333333]">
-                    <button className="my-3 ml-5 mr-4">
+                <div className=" mx-6 flex py-8 md:mx-0 lg:mx-4 xl:mx-6">
+                  <div className="mb-4 mt-5 cursor-pointer rounded-md px-4 text-2xl hover:bg-[#333333]">
+                    <button className="my-3 mr-4">
                       <FontAwesomeIcon icon={faPlay} />
                     </button>
-                    <span className="mr-5 font-poppins-regular font-semibold">
+                    <span className="font-poppins-regular font-semibold">
                       Trailer
                     </span>
                   </div>

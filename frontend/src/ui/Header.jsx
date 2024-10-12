@@ -34,16 +34,18 @@ export default function Header({ children, images }) {
           className={`header ${index === currentImage ? 'visible' : 'hidden'}`}
           key={index}
         >
-          <div
-            className="header-image blurred-image"
-            style={{ backgroundImage: `url(${image.src})` }}
-          ></div>
-          {/* <div className="overlay"></div> */}
-          <div
-            className="header-image clear-image"
-            style={{ backgroundImage: `url(${image.src})` }}
-          ></div>
-          <div className="absolute left-[100px] top-[200px] space-y-4">
+          <div className="">
+            <div
+              className=" blurred-image"
+              style={{ backgroundImage: `url(${image.src})` }}
+            ></div>
+            {/* <div className="overlay"></div> */}
+            <div
+              className="header-image clear-image"
+              style={{ backgroundImage: `url(${image.src})` }}
+            ></div>
+          </div>
+          <div className="absolute left-[100px] top-[200px] hidden space-y-4 xl:block">
             <h2 className=" max-w-[400px] whitespace-normal break-words font-poppins-semibold text-[45px] font-bold text-white">
               {image.title}
             </h2>
@@ -80,7 +82,7 @@ export default function Header({ children, images }) {
           </div>
         </div>
       ))}
-      <div className="absolute left-[100px] top-[600px] flex items-center justify-center space-x-6">
+      <div className="absolute hidden items-center justify-center space-x-6 md:left-[460px] md:top-[550px] xl:left-[100px] xl:top-[600px] xl:flex">
         <button
           className=" z-20 cursor-pointer rounded-md border border-zinc-400 pb-3 pl-3 pr-4 text-5xl"
           onClick={handlePrev}

@@ -41,14 +41,21 @@ function UserInfo({ username, onLogout }) {
   }
 
   return (
-    <div className="z-10 ml-[100px] flex">
+    <div className="user-info z-10 hidden md:flex lg:ml-auto">
       <div
-        className="relative cursor-pointer rounded-full border-[3px] border-primary"
+        className={`relative ${
+          username !== ''
+            ? 'md:border-3 cursor-pointer rounded-full border-2 border-primary'
+            : ''
+        }`}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
+        {/* Avatar */}
         <img
-          className="{username === '' ? 'cursor-pointer' : ''} h-[45px] w-[45px] rounded-full"
+          className={`${
+            username === '' ? 'cursor-pointer' : ''
+          }  h-12 w-12 rounded-full object-cover sm:h-14 sm:w-14 md:h-[45px] md:w-[45px] lg:h-[50px] lg:w-[50px]`}
           src={avt}
           alt="Avatar"
         ></img>
@@ -81,13 +88,22 @@ function UserInfo({ username, onLogout }) {
                   Logout
                 </a>
               </li>
+              <li className=" hover:bg-[#e9e9e9]">
+                <a
+                  className=" block px-6 py-2 text-3xl text-[#706f6f]"
+                  href="#"
+                  onClick={() => navigate('/test')}
+                >
+                  Test
+                </a>
+              </li>
             </ul>
             {/* Arrow-like shape */}
             <div className="absolute -top-10 right-8 h-0 w-0 rotate-180  transform border-x-[18px] border-y-[14px] border-solid border-transparent border-t-[white]"></div>
           </div>
         )}
       </div>
-      <p className="ml-6 mt-4 text-3xl">
+      <p className="ml-6 mt-4 hidden text-3xl lg:flex">
         {username === '' ? (
           <button
             href="#"

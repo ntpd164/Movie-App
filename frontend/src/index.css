@@ -96,14 +96,15 @@ li:hover .border-menu {
 
   filter: blur(6px);
   opacity: 0.8;
-  /* z-index: 0; */
+  z-index: 0;
 }
 
 .clear-image {
   content: '';
   background-repeat: no-repeat;
-  z-index: 1;
   background-size: contain;
+  z-index: 1;
+  width: 100%;
 }
 
 .overlay {
@@ -319,6 +320,10 @@ li:hover .border-menu {
   z-index: 1;
 }
 
+.large-font-toast {
+  font-size: 16px !important;
+}
+
 /*
 SPACING SYSTEM (px)
 2 / 4 / 8 / 12 / 16 / 24 / 32 / 40 / 48 / 64 / 80 / 96 / 128
@@ -326,3 +331,50 @@ SPACING SYSTEM (px)
 FONT SIZE SYSTEM (px)
 10 / 12 / 14 / 16 / 18 / 20 / 24 / 30 / 36 / 44 /52 / 62 / 74 / 86 / 98
 */
+
+/* responsive */
+
+@media (max-width: 1024px) {
+  .slider-container {
+    height: 400px;
+  }
+
+  .header-image {
+    background-position: center;
+  }
+
+  .clear-image {
+    /* height: 50%; */
+    background-position: center;
+    /* top: -8rem; */
+  }
+  .blurred-image {
+    display: none;
+  }
+}
+
+/* Tablet */
+@media (min-width: 740px) and (max-width: 1024px) {
+  .clear-image {
+    top: -18%;
+    background-size: cover;
+    height: 150%;
+  }
+}
+
+@media (max-width: 739px) {
+  .clear-image {
+    top: -3%;
+    background-size: contain;
+    height: 100%;
+  }
+
+  .user-info {
+    display: flex;
+  }
+}
+
+@media (max-width: 739px) {
+  .list-movie {
+  }
+}

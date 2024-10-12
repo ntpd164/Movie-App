@@ -90,7 +90,7 @@ export default function FanFavorites({
     navigate('/login');
   }
 
-  function handleAdd(movie) {
+  async function handleAdd(movie) {
     if (!username) {
       navigate('/login');
       return;
@@ -114,28 +114,80 @@ export default function FanFavorites({
     const newWatchedMovie = {
       imdbID: movie.imdbID,
       title: movie.Title,
-      year: movie.Year,
+      year: String(movie.Year),
       poster: movie.Poster,
       director: movie.Director,
-      actors: movie.Actors.split(', '),
+      actors: movie.Actors,
       plot: movie.Plot,
-      imdbRating: Number(movie.imdbRating),
+      imdbRating: String(movie.imdbRating),
       imdbVotes: movie.imdbVotes,
-      runtime: Number(movie.Runtime.split(' ')[0]),
-      userRating,
+      runtime: String(movie.Runtime.split(' ')[0]),
+      userRating: String(userRating),
     };
 
     onAddWatched(newWatchedMovie);
     setShowPopupSuccess(true);
     console.log('Add movie: ', newWatchedMovie);
+
+    const token = localStorage.getItem('token');
+    try {
+      const response = await fetch('http://localhost:3000/watchlist/add', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(newWatchedMovie),
+      });
+
+      console.log('response: ', response);
+
+      if (response.ok) {
+        // onAddWatched(newWatchedMovie);
+        setShowPopupSuccess(true);
+        console.log('Add movie to database: ', newWatchedMovie);
+      } else {
+        setShowPopupFail(true);
+        console.error('Error adding movie:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error adding movie:', error);
+      setShowPopupFail(true);
+    }
   }
 
   const settings = {
-    dots: true,
+    dots: false,
     infinite: true,
     speed: 500,
     slidesToShow: 6,
     slidesToScroll: 1,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 4,
+          infinite: true,
+          dots: false,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          initialSlide: 2,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
   };
@@ -165,7 +217,10 @@ export default function FanFavorites({
   }
 
   return (
-    <div id="fan-favorites" className="mx-[140px] mb-[50px] pt-[30px]">
+    <div
+      id="fan-favorites"
+      className="mb-[50px] pt-[30px] max-[739px]:mx-16 md:mx-28 xl:mx-[140px]"
+    >
       {(showPopupSuccess ||
         showPopupFail ||
         showRating ||
@@ -178,13 +233,13 @@ export default function FanFavorites({
             className="group mb-4 flex w-[22rem] cursor-pointer"
           >
             <div className="mr-4 rounded-sm border-2 border-primary"></div>
-            <h2 className="font-poppins-semibold text-5xl font-semibold text-white">
+            <h2 className="font-poppins-semibold text-4xl font-semibold text-white sm:text-5xl">
               Fan favorites
             </h2>
             <a className="relative">
               <FontAwesomeIcon
                 icon={faChevronRight}
-                className="absolute left-2 top-2 ml-4 text-4xl text-white transition-all duration-300 ease-in-out group-hover:text-primary"
+                className="absolute left-2 top-2 ml-4 text-3xl text-white transition-all duration-300 ease-in-out group-hover:text-primary sm:text-4xl"
               />
             </a>
           </div>
@@ -207,25 +262,25 @@ export default function FanFavorites({
         <div className="relative">
           <Slider {...settings}>
             {fanFavoritesMovies.map((movie, index) => (
-              <div key={index} className="px-4">
+              <div key={index} className="pl-10 pr-9 md:px-2 xl:px-4">
                 <img
                   src={movie.Poster}
                   alt={movie.Title}
                   className="h-[300px] w-full"
                 />
                 <div className="bg-[#1a1a1a] text-3xl">
-                  <div className="flex items-center pl-8 pt-6">
+                  <div className="flex items-center pl-14 pt-6 md:pl-4 xl:pl-8">
                     <span className="mr-1">⭐️</span>
                     <span>{movie.imdbRating}</span>
                     <button
-                      className={`ml-auto mr-14 cursor-default ${
+                      className={`ml-auto mr-14 cursor-default md:mr-6 xl:mr-14 ${
                         isWatched(movie) ? 'text-blue-500' : 'text-[#f8f5f5]'
                       }`}
                     >
                       <FontAwesomeIcon icon={faStar} />
                     </button>
                   </div>
-                  <p className="overflow-hidden truncate text-ellipsis whitespace-nowrap pl-8 pt-4 font-poppins-semibold font-medium text-white">
+                  <p className="overflow-hidden truncate text-ellipsis whitespace-nowrap pl-14 pt-4 font-poppins-semibold font-medium text-white md:pl-4 xl:pl-8">
                     {movie.Title}
                   </p>
                   <div
@@ -237,12 +292,12 @@ export default function FanFavorites({
                     </button>
                     <span>Watchlist</span>
                   </div>
-                  <div className="mx-8 flex py-8">
+                  <div className="mx-10 flex py-8 md:mx-0 xl:mx-8">
                     <div className="mb-4 mt-5 cursor-pointer rounded-md text-2xl hover:bg-[#333333]">
                       <button className="my-3 ml-5 mr-4">
                         <FontAwesomeIcon icon={faPlay} />
                       </button>
-                      <span className="mr-5 font-poppins-regular font-semibold">
+                      <span className="font-poppins-regular font-semibold md:mr-1 xl:mr-5">
                         Trailer
                       </span>
                     </div>

@@ -6,6 +6,7 @@ import WatchListOverview from './pages/WatchListOverview';
 import FanFavoritesOverview from './pages/FanFavoritesOverview';
 import UserProfile from './pages/UserProfile';
 import MoviePage from './ui/MoviePage';
+import Test from './pages/Test';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
 const router = createBrowserRouter([
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
       {
         path: '/user/watchlist',
         element: <WatchList />,
+      },
+      {
+        path: '/test',
+        element: <Test />,
       },
     ],
   },

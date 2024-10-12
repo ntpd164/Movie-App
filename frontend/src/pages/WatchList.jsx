@@ -9,17 +9,40 @@ import { useState, useEffect } from 'react';
 import Footer from '../ui/Footer';
 import BackButton from '../ui/BackButton';
 import BackToTop from '../ui/BackToTopButton';
+import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 
 export default function WatchList() {
   const username = localStorage.getItem('loggedInUsername');
+  console.log('Username: ', username);
   const [showOrderMenu, setShowOrderMenu] = useState(false);
   const [order, setOrder] = useState('List order');
   const [sortDirection, setSortDirection] = useState('asc');
-  const [watched, setWatched] = useState(
-    JSON.parse(localStorage.getItem('watched')) || []
-  );
+  
   const [modeDisplay, setModeDisplay] = useState('details');
   const [showBtnBackToTop, setShowBtnBackToTop] = useState(false);
+
+  const [watchlist, setWatchlist] = useState([]);
+  const [inittialWatchlist, setInitialWatchlist] = useState([]);
+
+  const token = localStorage.getItem('token');
+  useEffect(() => {
+    const fetchWatchlist = async () => {
+      try {
+        const res = await fetch('http://localhost:3000/watchlist/get', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        });
+        const data = await res.json();
+        setWatchlist(data.data.watchlist);
+        setInitialWatchlist(data.data.watchlist);
+      } catch (err) {
+        console.error('Error:', err);
+      }
+    };
+    fetchWatchlist();
+  }, [token]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -35,7 +58,7 @@ export default function WatchList() {
     };
   }, []);
 
-  console.log('Watched: ', watched);
+  // console.log('Watched: ', watched);
 
   document.title = 'Your Watchlist';
 
@@ -59,7 +82,7 @@ export default function WatchList() {
   }
 
   function sortWatched(order, direction) {
-    let sortedWatched = [...watched];
+    let sortedWatched = [...watchlist];
     switch (order) {
       case 'Alphabetical':
         sortedWatched.sort((a, b) =>
@@ -93,13 +116,14 @@ export default function WatchList() {
         );
         break;
       default:
-        sortedWatched = JSON.parse(localStorage.getItem('watched')) || [];
+        sortedWatched = [...inittialWatchlist];
         if (direction === 'desc') {
           sortedWatched.reverse();
         }
         break;
     }
-    setWatched(sortedWatched);
+    // setWatched(sortedWatched);
+    setWatchlist(sortedWatched);
   }
 
   function handleModeChange(mode) {
@@ -129,8 +153,8 @@ export default function WatchList() {
       <div className=" bg-white pb-20 pl-10 pt-28 md:pl-28">
         <div className="mb-10 font-poppins-semibold text-3xl font-normal text-black md:flex">
           <div className="mb-10 mt-3 md:mb-0">
-            <span>{watched.length}</span>
-            {watched.length > 1 ? ' movies' : ' movie'}
+            <span>{watchlist.length}</span>
+            {watchlist.length > 1 ? ' movies' : ' movie'}
           </div>
           <div className="flex md:ml-[20rem] lg:ml-[37rem] xl:ml-[60rem]">
             <span className="mt-3 hidden sm:block">Sort by</span>
@@ -166,14 +190,14 @@ export default function WatchList() {
                   >
                     IMDb rating
                   </div>
-                  <div
+                  {/* <div
                     onClick={() => handleOrderChange('Release date')}
                     className={`px-4 py-2 ${
                       order === 'Release date' ? 'bg-[#ededed]' : ''
                     } hover:bg-[#ededed]`}
                   >
                     Release date
-                  </div>
+                  </div> */}
                   <div
                     onClick={() => handleOrderChange('Runtime')}
                     className={`px-4 py-2 ${
@@ -333,8 +357,8 @@ export default function WatchList() {
         </div>
         {modeDisplay === 'details' && (
           <div className="w-11/12 rounded-md border border-zinc-400 pb-10 pt-14 md:w-11/12 lg:w-3/4">
-            {watched.map((movie, index) => (
-              <div key={movie.imdbID} className="mb-10 ml-10">
+            {watchlist.map((movie, index) => (
+              <div key={movie.imdbID} className="relative mb-10 ml-10">
                 <div className="flex">
                   <img
                     className="w-1/8 h-[120px]"
@@ -379,16 +403,28 @@ export default function WatchList() {
                   <span className="mr-4 font-poppins-regular font-bold">
                     Stars
                   </span>
-                  {movie.actors.map((actor, index) => (
+                  {/* {movie.actors.map((actor, index) => (
                     <span
                       key={index}
                       className="mr-4 cursor-pointer text-[#02679d] hover:underline"
                     >
                       {actor}
                     </span>
-                  ))}
+                  ))} */}
+                  <span
+                    key={index}
+                    className="mr-4 cursor-pointer text-[#02679d] hover:underline"
+                  >
+                    {movie.actors}
+                  </span>
                 </div>
-                {index < watched.length - 1 && (
+                <div className="absolute -top-4 right-10">
+                  <FontAwesomeIcon
+                    icon={faCircleXmark}
+                    className="text-4xl text-red-dark"
+                  />
+                </div>
+                {index < watchlist.length - 1 && (
                   <div className="mr-10 mt-4 border"></div>
                 )}
               </div>
@@ -397,7 +433,7 @@ export default function WatchList() {
         )}
         {modeDisplay === 'grid' && (
           <div className="grid w-4/5 gap-10 md:w-11/12 md:max-w-[770px] md:grid-cols-2 lg:w-11/12 lg:max-w-[980px] lg:grid-cols-3 xl:w-11/12 xl:max-w-[1200px] xl:grid-cols-4">
-            {watched.map((movie, index) => (
+            {watchlist.map((movie, index) => (
               <div
                 key={movie.imdbID}
                 className="flex flex-col items-center rounded-md border border-zinc-400 shadow-lg"
