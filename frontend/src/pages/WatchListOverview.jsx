@@ -25,7 +25,7 @@ export default function WatchListOverview() {
   useEffect(() => {
     const fetchWatchlist = async () => {
       try {
-        const res = await fetch('http://localhost:3000/watchlist/get', {
+        const res = await fetch('https://movie-app-server-niy5.onrender.com/watchlist/get', {
           headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
@@ -72,7 +72,7 @@ export default function WatchListOverview() {
 
   async function handleDeleteWatchlist(id) {
     try {
-      const response = await fetch(`http://localhost:3000/watchlist/remove`, {
+      const response = await fetch(`https://movie-app-server-niy5.onrender.com/watchlist/remove`, {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${token}`,

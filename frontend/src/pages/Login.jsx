@@ -24,7 +24,7 @@ function Login() {
   const user = useSelector((state) => state.user);
   console.log(user);
 
-  const url = 'http://localhost:3000/users';
+  const url = 'https://movie-app-server-niy5.onrender.com/users';
   // const [token, setToken] = useState('');
 
   // const [username, setUsername] = useState('');

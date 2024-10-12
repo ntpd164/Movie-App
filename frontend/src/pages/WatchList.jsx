@@ -28,7 +28,7 @@ export default function WatchList() {
   useEffect(() => {
     const fetchWatchlist = async () => {
       try {
-        const res = await fetch('http://localhost:3000/watchlist/get', {
+        const res = await fetch('https://movie-app-server-niy5.onrender.com/watchlist/get', {
           headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',

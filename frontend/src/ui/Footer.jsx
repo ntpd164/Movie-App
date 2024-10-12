@@ -57,7 +57,7 @@ export default function Footer() {
             </p>
           </div>
           <img
-            src="../src/assets/img/other/appQR.png"
+            src="/assets/img/other/appQR.png"
             alt="QR code for app download"
             className="mx-auto h-52 w-52 rounded-md md:h-24 md:w-24"
           />
@@ -99,7 +99,7 @@ export default function Footer() {
           <div className="relative">
             <span className="mr-[72px]">an</span>
             <img
-              src="../src/assets/img/other/amazon.png"
+              src="/assets/img/other/amazon.png"
               alt="Amazon logo"
               className="w-30 absolute left-6 top-0 mx-4 h-[35px] text-white"
             />

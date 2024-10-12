@@ -150,7 +150,7 @@ export default function FanFavoritesOverview() {
 
     const token = localStorage.getItem('token');
     try {
-      const response = await fetch('http://localhost:3000/watchlist/add', {
+      const response = await fetch('https://movie-app-server-niy5.onrender.com/watchlist/add', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
