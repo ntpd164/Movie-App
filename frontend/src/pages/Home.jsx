@@ -73,7 +73,7 @@ export default function Home({ movieId }) {
 
   const images = [
     {
-      src: '../src/assets/img/slider/dune2.jpg',
+      src: '/assets/img/slider/dune2.jpg',
       title: 'Dune: Part Two',
       genre: 'Action',
       year: '2024',
@@ -84,7 +84,7 @@ export default function Home({ movieId }) {
       alt: 'Dune',
     },
     {
-      src: '../src/assets/img/slider/wish.jpg',
+      src: '/assets/img/slider/wish.jpg',
       title: 'Wish',
       genre: 'Comedy',
       year: '2023',
@@ -95,7 +95,7 @@ export default function Home({ movieId }) {
       alt: 'Wish',
     },
     {
-      src: '../src/assets/img/slider/furiosa.jpg',
+      src: '/assets/img/slider/furiosa.jpg',
       title: 'Furiosa: A Mad Max Saga',
       genre: 'Sci-Fi',
       year: '2024',
@@ -106,7 +106,7 @@ export default function Home({ movieId }) {
       alt: 'Furiosa',
     },
     {
-      src: '../src/assets/img/slider/badboys.jpg',
+      src: '/assets/img/slider/badboys.jpg',
       title: 'Bad Boys: Ride or Die',
       genre: 'Action',
       year: '2024',
@@ -117,7 +117,7 @@ export default function Home({ movieId }) {
       alt: 'Bad Boys',
     },
     {
-      src: '../src/assets/img/slider/fallguy.jpg',
+      src: '/assets/img/slider/fallguy.jpg',
       title: 'The Fall Guy',
       genre: 'Comedy',
       year: '2024',
@@ -128,7 +128,7 @@ export default function Home({ movieId }) {
       alt: 'Fallguy',
     },
     {
-      src: '../src/assets/img/slider/panda.png',
+      src: '/assets/img/slider/panda.png',
       title: 'Kung Fu Panda 4',
       genre: 'Animation',
       year: '2024',
@@ -142,62 +142,62 @@ export default function Home({ movieId }) {
 
   const celebrities = [
     {
-      src: '../src/assets/img/celebrities/tamayoPerry.jpg',
+      src: '/assets/img/celebrities/tamayoPerry.jpg',
       name: 'Tamayo Perry',
       role: 'Actor',
     },
     {
-      src: '../src/assets/img/celebrities/martinMull.jpg',
+      src: '/assets/img/celebrities/martinMull.jpg',
       name: 'Martin Mull',
       role: 'Actor',
     },
     {
-      src: '../src/assets/img/celebrities/emma.jpg',
+      src: '/assets/img/celebrities/emma.jpg',
       name: "Emma D'Arcy",
       role: 'Actress',
     },
     {
-      src: '../src/assets/img/celebrities/coughlan.jpg',
+      src: '/assets/img/celebrities/coughlan.jpg',
       name: 'Nicola Coughlan',
       role: 'Actress',
     },
     {
-      src: '../src/assets/img/celebrities/moriarty.jpg',
+      src: '/assets/img/celebrities/moriarty.jpg',
       name: 'Erin Moriarty',
       role: 'Actress',
     },
     {
-      src: '../src/assets/img/celebrities/sutherland.jpg',
+      src: '/assets/img/celebrities/sutherland.jpg',
       name: 'Jennifer Lawrence',
       role: 'Actress',
     },
     {
-      src: '../src/assets/img/celebrities/valorie.jpg',
+      src: '/assets/img/celebrities/valorie.jpg',
       name: 'Valorie Curry',
       role: 'Actress',
     },
     {
-      src: '../src/assets/img/celebrities/olivia.jpg',
+      src: '/assets/img/celebrities/olivia.jpg',
       name: 'Olivia Cooke',
       role: 'Actress',
     },
     {
-      src: '../src/assets/img/celebrities/alba.jpg',
+      src: '/assets/img/celebrities/alba.jpg',
       name: 'Jessica Alba',
       role: 'Actress',
     },
     {
-      src: '../src/assets/img/celebrities/dafne.jpg',
+      src: '/assets/img/celebrities/dafne.jpg',
       name: 'Dafne Keen',
       role: 'Actress',
     },
     {
-      src: '../src/assets/img/celebrities/cobbs.jpg',
+      src: '/assets/img/celebrities/cobbs.jpg',
       name: 'Bill Cobbs',
       role: 'Actor',
     },
     {
-      src: '../src/assets/img/celebrities/adria.jpg',
+      src: '/assets/img/celebrities/adria.jpg',
       name: 'Adria Arjona',
       role: 'Actress',
     },

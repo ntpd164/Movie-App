@@ -8,7 +8,7 @@ function UserInfo({ username, onLogout }) {
   const navigate = useNavigate();
 
   const avt =
-    localStorage.getItem('avatar') || './src/assets/img/other/defaultUser.png';
+    localStorage.getItem('avatar') || '/assets/img/other/defaultUser.png';
 
   const handleMouseEnter = () => {
     if (username !== '') setShowMenu(true);
