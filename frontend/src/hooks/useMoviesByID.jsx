@@ -19,7 +19,7 @@ export function useMoviesById(initialMovieIds) {
               return cache.current[id];
             } else {
               const res = await fetch(
-                `http://www.omdbapi.com/?apikey=${KEY}&i=${id}`
+                `https://www.omdbapi.com/?apikey=${KEY}&i=${id}`
               );
 
               if (!res.ok) throw new Error('Something went wrong');
