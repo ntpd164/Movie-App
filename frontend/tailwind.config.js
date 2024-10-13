@@ -43,6 +43,7 @@ export default {
       backgroundImage: {
         'custom-gradient':
           'linear-gradient(to left, #00dbde, #fc00ff, #00dbde, #fc00ff)',
+          'login-background': "url('/assets/img/other/login_bg.jpg')",
       },
       transitionDuration: {
         400: '400ms',
