@@ -1,21 +1,10 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faEnvelope } from '@fortawesome/free-regular-svg-icons';
 import { faLock, faCheck } from '@fortawesome/free-solid-svg-icons';
-// import {
-//   faFacebook,
-//   faGithub,
-//   faGoogle,
-// } from '@fortawesome/free-brands-svg-icons';
-// import { Link } from 'react-router-dom';
-// import { useState } from 'react';
-// import { useDispatch } from 'react-redux';
-// import { updateName } from '../features/user/userSlice';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-// import useLocalStorageState from '../useLocalStorageState';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-// import ToastMessageLogin from '../ui/ToastMessageLogin';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -24,25 +13,15 @@ function Login() {
   console.log(user);
 
   const url = 'https://movie-app-server-niy5.onrender.com/users';
-  // const [token, setToken] = useState('');
 
-  // const [username, setUsername] = useState('');
   const [curState, setCurState] = useState('Login');
-  // const [toastStatus, setToastStatus] = useState({
-  //   visible: false,
-  //   type: '',
-  //   message: '',
-  // });
-  // const [toastKey, setToastKey] = useState(0);
   const [data, setData] = useState({
     name: '',
     email: '',
     password: '',
     passwordConfirm: '',
   });
-  // const dispatch = useDispatch();
   const navigate = useNavigate();
-  // const location = useLocation();
 
   const onChangeHandler = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
@@ -51,16 +30,6 @@ function Login() {
   const [isPasswordFocus, setIsPasswordFocus] = useState(false);
   const [isConfirmPasswordFocus, setIsConfirmPasswordFocus] = useState(false);
   const [isUsernameFocus, setIsUsernameFocus] = useState(false);
-
-  // const handleLoginFail = () => {
-  //   setToastStatus({
-  //     visible: true,
-  //     type: 'error',
-  //     message: 'Incorrect email or password',
-  //   });
-
-  //   setToastKey(toastKey + 1);
-  // };
 
   const onLogin = async (e) => {
     e.preventDefault();
@@ -74,43 +43,26 @@ function Login() {
     try {
       const response = await axios.post(newUrl, data);
 
-      // Kiểm tra toàn bộ response
       console.log('Response:', response.data);
 
       if (response.data.status === 'success') {
         if (curState === 'Login') {
           localStorage.setItem('token', response.data.token);
           localStorage.setItem('loginSuccess', 'true');
-          // lưu lại tên user để hiển thị ở header
-          // localStorage.setItem('loggedInUsername', response.data.name);
-          // console.log('username: ', response.data.name);
-
-          // setToastStatus({
-          //   visible: true,
-          //   type: 'success',
-          //   message: 'Login successful',
-          // });
-          // toast.success('Login successful', {
-          //   className: 'large-font-toast',
-          // });
           navigate('/');
         } else {
-          // setToastStatus({ visible: true, type: 'success' });
           setCurState('Login');
-          // setToastStatus({
-          //   visible: true,
-          //   type: 'success',
-          //   message: 'Sign up successful',
-          // });
+          toast.success('Sign up successful', {
+            className: 'large-font-toast',
+          });
+
         }
       } else {
-        // handleLoginFail();
         toast.error('Incorrect email or password', {
           className: 'large-font-toast',
         });
       }
     } catch (error) {
-      // handleLoginFail();
       toast.error('Incorrect email or password', {
         className: 'large-font-toast',
       });
@@ -125,19 +77,6 @@ function Login() {
     window.scrollTo(0, 0);
   }, []);
 
-  // function handleSubmit(e) {
-  //   console.log('handleSubmit');
-  //   e.preventDefault();
-
-  //   // if (!username) return;
-  //   // console.log('username', username);
-  //   // dispatch(updateName(username));
-
-  //   // const redirectTo = location.state?.from || '/';
-  //   // navigate(redirectTo);
-  //   // localStorage.setItem('loggedInUsername', username);
-  //   navigate('/');
-  // }
 
   const hasEmailContent = data.email !== '';
   const hasPasswordContent = data.password !== '';
@@ -303,13 +242,6 @@ function Login() {
           </form>
         </div>
       </div>
-      {/* {toastStatus.visible && (
-        <ToastMessageLogin
-          key={toastKey}
-          type={toastStatus.type}
-          message={toastStatus.message}
-        />
-      )} */}
     </div>
   );
 }

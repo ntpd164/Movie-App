@@ -292,7 +292,7 @@ export default function Home({ movieId }) {
   return (
     <>
       <ToastContainer />
-      <div className="z-10 flex w-full items-center justify-between pt-10 lg:hidden">
+      <div className="z-10 flex w-full items-center relative justify-between pt-10 lg:hidden">
         <Logo />
         <Menu username={username} />
         <Search

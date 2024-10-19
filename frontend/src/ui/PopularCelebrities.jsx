@@ -47,7 +47,7 @@ export default function PopularCelebrities({ celebrities }) {
   return (
     <div
       id="popular-celebrities"
-      className="pt-[30px] max-[739px]:mx-16 md:mx-28 xl:mx-[140px]"
+      className="pt-[30px] max-[739px]:mx-16 md:mx-28 xl:mx-[140px] mx-0"
     >
       <div>
         <div className="mb-4 flex">
@@ -58,7 +58,7 @@ export default function PopularCelebrities({ celebrities }) {
           <a className="relative">
             <FontAwesomeIcon
               icon={faChevronRight}
-              className="absolute left-2 top-1 ml-4 text-4xl text-white"
+              className="absolute left-2 top-1 ml-0 text-4xl text-white"
             />
           </a>
         </div>
