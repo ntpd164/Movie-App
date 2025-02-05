@@ -16,14 +16,18 @@ db.connect();
 
 app.use(
   cors({
-    origin: ['https://movie-app-nine-neon.vercel.app', 'https://movie-app-ntpd164s-projects.vercel.app', 'https://movie-app-git-main-ntpd164s-projects.vercel.app', 'http://localhost:5173'],
+    origin: [
+      'https://movie-app-nine-neon.vercel.app',
+      'https://movie-app-ntpd164s-projects.vercel.app',
+      'https://movie-app-git-main-ntpd164s-projects.vercel.app',
+      'http://localhost:5173',
+    ],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
   })
 );
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'build')));
-
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -61,6 +65,5 @@ app.get('*', (req, res) => {
 app.listen(port, () => {
   console.log(`App listening at http://localhost:${port}`);
 });
-
 
 // mongodb+srv://ntpd164:QA3x5NxC9*3fWe5@cluster0.1tlq4.mongodb.net/?
