@@ -52,8 +52,8 @@ function Search({
           onChange={handleInputChanged}
         />
         <div className='hidden md:flex'>
-          {query && movies.length > 0 && (
-            <div className="absolute right-0 bottom-0 top-[60px] left-0 z-50 flex h-[500px] overflow-y-auto">
+          {query && movies.length > 3 && (
+            <div className="absolute right-0 bottom-0 top-[40px] left-0 z-50 flex h-[500px] overflow-y-auto">
               <div className='w-full'>
                 {selectedId ? (
                   <Box>
