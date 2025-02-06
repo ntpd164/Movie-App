@@ -6,7 +6,9 @@
   "scripts": {
     "start": "nodemon src/index.js",
     "watch": "sass --watch src/resources/scss/app.scss src/public/css/app.css",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build-src": "babel src -d build --copy-files",
+    "build": "node build/index.js"
   },
   "repository": {
     "type": "git",
@@ -38,6 +40,9 @@
     "mongoose-validator": "^2.1.0"
   },
   "devDependencies": {
+    "@babel/cli": "^7.26.4",
+    "@babel/core": "^7.26.7",
+    "@babel/preset-env": "^7.26.7",
     "autoprefixer": "^10.4.20",
     "morgan": "^1.10.0",
     "nodemon": "^3.1.4",

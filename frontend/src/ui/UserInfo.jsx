@@ -10,12 +10,12 @@ function UserInfo({ username, onLogout }) {
   const avt =
     localStorage.getItem('avatar') || '/assets/img/other/defaultUser.png';
 
-  const handleMouseEnter = () => {
-    if (username !== '') setShowMenu(true);
-  };
-
-  const handleMouseLeave = () => {
-    setShowMenu(false);
+  const handleShowMenu = () => {
+    if (username !== '') {
+      setShowMenu(!showMenu);
+    } else {
+      navigate('/login');
+    }
   };
 
   function handleLogout() {
@@ -41,15 +41,13 @@ function UserInfo({ username, onLogout }) {
   }
 
   return (
-    <div className="user-info z-10 hidden md:flex lg:ml-auto">
+    <div className="user-info z-10 hidden md:flex lg:ml-auto cursor-pointer select-none relative" onClick={handleShowMenu}>
       <div
         className={`relative ${
           username !== ''
             ? 'md:border-3 cursor-pointer rounded-full border-2 border-primary'
             : ''
         }`}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
       >
         {/* Avatar */}
         <img
@@ -103,11 +101,11 @@ function UserInfo({ username, onLogout }) {
           </div>
         )}
       </div>
-      <p className="ml-6 mt-4 hidden text-3xl lg:flex">
+      <p className="ml-6 mt-5 hidden text-3xl lg:flex select-none font-poppins-regular font-semibold text-white">
         {username === '' ? (
           <button
             href="#"
-            className="font-poppins-regular text-white"
+            className=""
             onClick={handleLogin}
           >
             Login

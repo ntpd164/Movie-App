@@ -6,7 +6,7 @@ function PrevArrow(props) {
 
   return (
     <div
-      className="absolute top-[46%] cursor-pointer border p-5 text-4xl max-[739px]:-left-10"
+      className="absolute top-[46%] cursor-pointer border p-5 text-4xl max-[739px]:-left-10 md:-left-20"
       onClick={onClick}
     >
       <FontAwesomeIcon icon={faChevronLeft} />
