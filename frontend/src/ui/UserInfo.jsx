@@ -28,12 +28,6 @@ function UserInfo({ username, onLogout }) {
     }
   }
 
-  function onUserProfile() {
-    if (username !== '') {
-      navigate('/user/profile');
-    }
-  }
-
   function onWatchlist() {
     if (username !== '') {
       navigate('/user/watchlist');
@@ -61,15 +55,6 @@ function UserInfo({ username, onLogout }) {
           <div className="absolute -right-4 top-20 z-10 w-[160px] rounded-md bg-white p-2 text-2xl shadow-md">
             <ul>
               <li className=" hover:bg-[#e9e9e9]">
-                <a
-                  className=" block px-6 py-2 text-3xl text-[#706f6f]"
-                  href="#"
-                  onClick={onUserProfile}
-                >
-                  Profile
-                </a>
-              </li>
-              <li className=" hover:bg-[#e9e9e9]">
                 <button
                   className=" block px-6 py-2 text-3xl text-[#706f6f]"
                   onClick={onWatchlist}
@@ -84,15 +69,6 @@ function UserInfo({ username, onLogout }) {
                   onClick={handleLogout}
                 >
                   Logout
-                </a>
-              </li>
-              <li className=" hover:bg-[#e9e9e9]">
-                <a
-                  className=" block px-6 py-2 text-3xl text-[#706f6f]"
-                  href="#"
-                  onClick={() => navigate('/test')}
-                >
-                  Test
                 </a>
               </li>
             </ul>

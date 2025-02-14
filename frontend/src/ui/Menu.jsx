@@ -56,7 +56,7 @@ export default function Menu({ username }) {
       {/* Menu for xl and larger screens */}
       <ul className="ml-4 mt-1  hidden xl:flex">
         <li className="link mr-20 cursor-pointer font-poppins-regular text-3xl">
-          <a href="#top-picks">Top Picksss</a>
+          <a href="#top-picks">Top Picks</a>
         </li>
         <li className="link cursor-pointer font-poppins-regular text-3xl xl:mr-14">
           <a href="#fan-favorites">Fan Favorites</a>
