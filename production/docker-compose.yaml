@@ -26,7 +26,7 @@ services:
       - node-network
 
   frontend:
-    image: ${{ secrets.DOCKER_HUB_USERNAME }}/movie_app_frontend:latest
+    image: ${DOCKER_HUB_USERNAME}/movie_app_frontend:latest
     ports:
       - "5173:80"
     # volumes:
