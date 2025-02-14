@@ -47,12 +47,6 @@ jobs:
           docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/movie_app_backend:latest -f backend/Dockerfile ./backend
           docker push ${{ secrets.DOCKER_HUB_USERNAME }}/movie_app_backend:latest
 
-      - name: Build Frontend
-        run: |
-          cd frontend
-          npm install
-          npm run build
-
       - name: Build and push Frontend Docker image
         run: |
           docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/movie_app_frontend:latest -f frontend/Dockerfile ./frontend
@@ -60,5 +54,11 @@ jobs:
 
       - name: Deploy using Docker Compose
         run: |
+          # Pull image mới nhất từ Docker Hub
           docker compose -f production/docker-compose.yaml --env-file production/.env pull
-          docker compose -f production/docker-compose.yaml --env-file production/.env up -d
+
+          # Dừng và xóa container, network cũ (giữ volume)
+          docker compose -f production/docker-compose.yaml --env-file production/.env down
+
+          # Khởi động lại container với image mới và force recreate
+          docker compose -f production/docker-compose.yaml --env-file production/.env up -d --force-recreate
