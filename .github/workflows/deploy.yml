@@ -28,11 +28,6 @@ jobs:
       - name: Verify .env file
         run: cat production/.env
 
-      - name: Prepare Nginx config
-        run: |
-          mkdir -p frontend/nginx-config
-          cp frontend/nginx.conf frontend/nginx-config/
-
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
