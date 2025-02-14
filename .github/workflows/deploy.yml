@@ -56,4 +56,4 @@ jobs:
         run: |
           docker compose -f production/docker-compose.yaml --env-file production/.env pull
           docker compose -f production/docker-compose.yaml --env-file production/.env down --rmi all --volumes
-          docker compose -f production/docker-compose.yaml --env-file production/.env up -d --force-recreate
+          docker compose -f production/docker-compose.yaml --env-file production/.env up -d --force-recreate --pull always
