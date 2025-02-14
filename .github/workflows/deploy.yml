@@ -47,6 +47,17 @@ jobs:
           docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/movie_app_backend:latest -f backend/Dockerfile ./backend
           docker push ${{ secrets.DOCKER_HUB_USERNAME }}/movie_app_backend:latest
 
+      - name: Build Frontend
+        run: |
+          cd frontend
+          npm install
+          npm run build
+
+      - name: Build and push Frontend Docker image
+        run: |
+          docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/movie_app_frontend:latest -f frontend/Dockerfile ./frontend
+          docker push ${{ secrets.DOCKER_HUB_USERNAME }}/movie_app_frontend:latest
+
       - name: Deploy using Docker Compose
         run: |
           docker compose -f production/docker-compose.yaml --env-file production/.env pull
