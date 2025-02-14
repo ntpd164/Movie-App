@@ -2,7 +2,9 @@ version: "3.8"
 
 services:
   backend:
-    image: ${DOCKER_HUB_USERNAME}/movie_app_backend:latest
+    build:
+      context: ../backend
+      dockerfile: Dockerfile
     env_file:
       - .env
     environment:
