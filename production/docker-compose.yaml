@@ -1,0 +1,41 @@
+version: "3.8"
+
+services:
+  backend:
+    build:
+      context: ../backend
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    environment:
+      - MONGODB_URL=mongodb+srv://${MONGODB_USERNAME}:${MONGODB_PASSWORD}@${MONGODB_HOST}/${MONGODB_DATABASE}/?retryWrites=true&w=majority
+      - JWT_SECRET=${JWT_SECRET}
+      - JWT_EXPIRES_IN=${JWT_EXPIRES_IN}
+    ports:
+      - "3000:3000"
+    networks:
+      - node-network
+
+  mongodb:
+    image: mongo:6-jammy
+    ports:
+      - "27017:27017"
+    volumes:
+      - dbdata6:/data/db
+    networks:
+      - node-network
+
+  frontend:
+    image: ${DOCKER_HUB_USERNAME}/movie_app_frontend:latest
+    ports:
+      - "5173:80"
+    # volumes:
+    #   - ../frontend/dist:/usr/share/nginx/html
+    #   - ./default.conf:/etc/nginx/conf.d/default.conf
+
+volumes:
+  dbdata6:
+
+networks:
+  node-network:
+    driver: bridge
